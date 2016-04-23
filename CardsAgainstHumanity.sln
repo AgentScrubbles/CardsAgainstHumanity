@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsAgainstHumanity.Server
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsAgainstHumanity.Server.Data", "CardsAgainstHumanity.Server.Data\CardsAgainstHumanity.Server.Data.csproj", "{1E8D48B6-32A3-448F-AC22-1DA563F03C80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsAgainstHumanity.Shared", "CardsAgainstHumanity.Shared\CardsAgainstHumanity.Shared.csproj", "{B3C4D109-4FF2-4918-8D13-190A7B04C8D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{1E8D48B6-32A3-448F-AC22-1DA563F03C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E8D48B6-32A3-448F-AC22-1DA563F03C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E8D48B6-32A3-448F-AC22-1DA563F03C80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3C4D109-4FF2-4918-8D13-190A7B04C8D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3C4D109-4FF2-4918-8D13-190A7B04C8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3C4D109-4FF2-4918-8D13-190A7B04C8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3C4D109-4FF2-4918-8D13-190A7B04C8D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CardReader.cs" />
+    <Compile Include="CardService.cs" />
     <Compile Include="Cards\BlackCard.cs" />
     <Compile Include="Cards\WhiteCard.cs" />
     <Compile Include="DataInjectionModule.cs" />
@@ -60,6 +61,12 @@
   <ItemGroup>
     <Content Include="Cards\BlackCards.txt" />
     <Content Include="Cards\WhiteCards.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CardsAgainstHumanity.Shared\CardsAgainstHumanity.Shared.csproj">
+      <Project>{B3C4D109-4FF2-4918-8D13-190A7B04C8D2}</Project>
+      <Name>CardsAgainstHumanity.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
