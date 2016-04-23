@@ -49,11 +49,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Game.cs" />
+    <Compile Include="Game\Round.cs" />
     <Compile Include="LogicInjectionModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CardsAgainstHumanity.Server.Data\CardsAgainstHumanity.Server.Data.csproj">
+      <Project>{1E8D48B6-32A3-448F-AC22-1DA563F03C80}</Project>
+      <Name>CardsAgainstHumanity.Server.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CardsAgainstHumanity.Shared\CardsAgainstHumanity.Shared.csproj">
+      <Project>{B3C4D109-4FF2-4918-8D13-190A7B04C8D2}</Project>
+      <Name>CardsAgainstHumanity.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
