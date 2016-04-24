@@ -21,7 +21,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         public IList<Guid> AvailableWhiteCards { get; private set; } 
         public IList<Guid> AvailableBlackCards { get; private set; }
         public bool IsRunning { get; private set; }
-        public List<Guid> Players { get; private set; } 
+        public List<string> Players { get; private set; } 
 
         public List<Round> Rounds { get; private set; }  
 
@@ -30,11 +30,11 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             AvailableWhiteCards = (await _cardService.GetAllWhiteCards()).Select(k => k.Key).Shuffle().ToList();
             AvailableBlackCards = (await _cardService.GetAllBlackCards()).Select(k => k.Key).Shuffle().ToList();
             Rounds = new List<Round>();
-            Players = new List<Guid>();
+            Players = new List<string>();
             IsRunning = true;
         }
 
-        public void AddPlayer(Guid playerId)
+        public void AddPlayer(string playerId)
         {
             //eh, a player can be added again, won't do anything
             if (Players.All(k => k != playerId))
@@ -43,7 +43,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             }
         }
 
-        public void RemovePlayer(Guid playerId)
+        public void RemovePlayer(string playerId)
         {
             if (Players.Contains(playerId))
             {

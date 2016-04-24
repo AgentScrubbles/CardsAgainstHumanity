@@ -12,22 +12,22 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         private ICardService _cardService;
         private bool _roundOpen;
 
-        public Round(ICardService cardService, Guid blackCardId, IEnumerable<Guid> playerIds )
+        public Round(ICardService cardService, Guid blackCardId, IEnumerable<string> playerIds )
         {
             _cardService = cardService;
             PlayerIds = playerIds;
             BlackCardId = blackCardId;
             _roundOpen = true;
-            PlayerSubmittedWhiteCards = new ConcurrentDictionary<Guid, IEnumerable<Guid>>();
+            PlayerSubmittedWhiteCards = new ConcurrentDictionary<string, IEnumerable<Guid>>();
         }
 
-        public IDictionary<Guid, IEnumerable<Guid>> PlayerSubmittedWhiteCards { get; set; } 
+        public IDictionary<string, IEnumerable<Guid>> PlayerSubmittedWhiteCards { get; set; } 
         public IEnumerable<Guid> WinningWhiteCards { get; set; } 
-        public Guid Winner { get; set; }
-        public IEnumerable<Guid> PlayerIds { get; }  
+        public string Winner { get; set; }
+        public IEnumerable<string> PlayerIds { get; }  
         public Guid BlackCardId { get;  }
 
-        public bool SubmitCards(Guid playerId, IEnumerable<Guid> whiteCards)
+        public bool SubmitCards(string playerId, IEnumerable<Guid> whiteCards)
         {
             PlayerSubmittedWhiteCards[playerId] = whiteCards;
             return AllPlayersSubmitted();
@@ -47,7 +47,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             _roundOpen = false;
         }
 
-        public void SubmitWinner(Guid playerId)
+        public void SubmitWinner(string playerId)
         {
             if(_roundOpen) throw new InvalidOperationException("Cannot submit a winner while the round is over!");
             WinningWhiteCards = PlayerSubmittedWhiteCards.Get(playerId);
