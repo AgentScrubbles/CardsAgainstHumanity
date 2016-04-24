@@ -1,4 +1,19 @@
 ﻿<div class="centered">
-    <button class="btn btn-lg" ng-click="StartGame()">Start a Game</button>
-    <a href="#" class="btn btn-lg">Join a Game</a>
+    <div ng-show="showmain">
+        <button class="btn btn-lg" ng-click="StartGame()">Start a Game</button>
+        <a ng-click="JoinGame()" class="btn btn-lg">Join a Game</a>
+    </div>
+    <div ng-show="showjoin">
+
+            <label>Game ID</label>
+            <input type="text" ng-model="gameid" class="form-control centered"/>
+        <br/>
+            <label>Player ID</label>
+            <input type="text" ng-model="playerid" class="form-control centered" />
+
+        
+        <br/>
+        <button class="btn btn-lg btn-primary" ng-click="JoinGameWithPlayer()">Join</button>
+        <button class="btn btn-lg" ng-click="CancelJoinGame()">Cancel</button>
+    </div>
 </div>

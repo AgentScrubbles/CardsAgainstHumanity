@@ -15,6 +15,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         {
             _cardService = cardService;
             GameId = Guid.NewGuid();
+            Task.Run(Setup).Wait();
         }
         public Guid GameId { get; }
 

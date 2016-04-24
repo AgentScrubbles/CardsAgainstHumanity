@@ -7,6 +7,9 @@
         return {
             CreateGame: function (callback, errorFn) {
                 $http.get(baseUrl + "Match/CreateGame").then(function (result){callback(result.data)}, errorFn);
+            },
+            JoinGame: function (gameid, playerid, callback, errorfn) {
+                $http.post(baseUrl + 'Match/JoinGame', { GameId: gameid, PlayerId: playerid }).then(function (result) { callback(result.data) }, errorfn);
             }
         }
     });

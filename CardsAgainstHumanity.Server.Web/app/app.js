@@ -12,17 +12,37 @@
 
 
     app.controller('MainCtrl', function ($scope, $location, apiservice, gameproperties) {
+        $scope.showmain = true;
+        $scope.showjoin = false;
+        $scope.gameid = '';
+        $scope.playerid = '';
+
         $scope.StartGame = function () {
             console.log('here');
             apiservice.CreateGame(function(result) {
-                gameproperties.setProperty(result);
+                gameproperties.setGameId(result);
                 $location.path('/lobby');
             });
+        }
+        $scope.JoinGame = function() {
+            $scope.showmain = false;
+            $scope.showjoin = true;
+        }
+        $scope.JoinGameWithPlayer = function() {
+            apiservice.JoinGame($scope.gameid, $scope.playerid, function(result) {
+                console.log(result);
+            }, function(error) {
+                console.log(result);
+            });
+        }
+        $scope.CancelJoinGame = function() {
+            $scope.showmain = true;
+            $scope.showjoin = false;
         }
     });
 
     app.controller('LobbyCtrl', function($scope, apiservice, gameproperties) {
-        $scope.GameId = gameproperties.getProperty();
+        $scope.GameId = gameproperties.getGameId();
     });
 
     app.controller('JoinCtrl', function ($scope, gameproperties) {

@@ -59,8 +59,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Cards\BlackCards.txt" />
-    <Content Include="Cards\WhiteCards.txt" />
+    <Content Include="Cards\BlackCards.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Cards\WhiteCards.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CardsAgainstHumanity.Shared\CardsAgainstHumanity.Shared.csproj">

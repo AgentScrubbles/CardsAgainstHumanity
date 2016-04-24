@@ -2,13 +2,20 @@
     var app = angular.module('cah');
     app.service('gameproperties', function () {
         var gameid = '';
+        var playerid = '';
 
         return {
-            getProperty: function () {
+            getGameId: function () {
                 return gameid;
             },
-            setProperty: function (value) {
+            setGameId: function (value) {
                 gameid = value;
+            },
+            getPlayerId: function() {
+                return playerid;
+            },
+            setPlayerId: function(value) {
+                playerid = value;
             }
         };
     });

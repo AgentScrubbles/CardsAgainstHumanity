@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Cors;
 using CardsAgainstHumanity.Server.Logic.Game;
+using Newtonsoft.Json;
 
 namespace CardsAgainstHumanity.Server.Api.Controllers
 {
@@ -20,13 +21,19 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             return _gameService.CreateGame();
         }
 
-        [HttpGet]
-        public bool JoinGame(string playerId, string gameId)
+        [HttpPost]
+        public bool JoinGame([FromBody]JoinGameModel model)
         {
-            var game = _gameService.GetGame(gameId);
-            game.AddPlayer(playerId);
+            var game = _gameService.GetGame(model.GameId);
+            game.AddPlayer(model.PlayerId);
             return true;
         }
+
+        public class JoinGameModel
+        {
+            public string GameId { get; set; }
+            public string PlayerId { get; set; }
+    }
 
         [HttpGet]
         public bool LeaveGame(string playerId, string gameId)
