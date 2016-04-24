@@ -1,3 +1,6 @@
+using CardsAgainstHumanity.Server.Data;
+using CardsAgainstHumanity.Server.Logic;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CardsAgainstHumanity.Server.Web.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(CardsAgainstHumanity.Server.Web.App_Start.NinjectWebCommon), "Stop")]
 
@@ -44,7 +47,7 @@ namespace CardsAgainstHumanity.Server.Web.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-
+                
                 RegisterServices(kernel);
                 return kernel;
             }
@@ -61,6 +64,8 @@ namespace CardsAgainstHumanity.Server.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Load(new LogicInjectionModule());
+            kernel.Load(new DataInjectionModule());
         }        
     }
 }

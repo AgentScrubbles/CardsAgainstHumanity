@@ -8,10 +8,10 @@ namespace CardsAgainstHumanity.Server.Logic.Game
 
     public interface IGameServiceFactory
     {
-        
+        GameService Get();
     }
 
-    public class GameServiceFactory
+    public class GameServiceFactory : IGameServiceFactory
     {
         private readonly ICardService _cardService;
 
