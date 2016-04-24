@@ -1,0 +1,75 @@
+﻿body {
+}
+
+h1 {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	line-height: 26.4px;
+}
+h2 {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 20px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	line-height: 26.4px;
+}
+h3 {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	line-height: 15.4px;
+}
+p {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	line-height: 20px;
+}
+blockquote {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 17.5px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	line-height: 25px;
+}
+pre {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	line-height: 18.5714px;
+}
+
+.btn {
+    background-color: #fff;
+    color: #000;
+    border-color: #000;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	line-height: 15.4px;
+}
+
+.margined {
+    margin: auto;
+    padding: 10px;
+}
+
+.centered {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+    text-align: center;
+}

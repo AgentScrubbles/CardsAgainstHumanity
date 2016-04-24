@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Cards Against Humanity - Online</title>
+    <meta charset="utf-8"/>
+
+    <script type="text/javascript" src="/scripts/angular.js"></script>
+    <script type="text/javascript" src="/scripts/angular-route.js"></script>
+    <script type="text/javascript" src="/scripts/angular-resource.js"></script>
+    <script type="text/javascript" src="/scripts/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/app/app.js"></script>
+    <script type="text/javascript" src="/app/api.js"></script>
+    <script type="text/javascript" src="/app/gameservice.js"></script>
+    <script type="text/javascript" src="/app/matchController.js"></script>
+
+    <link rel="stylesheet" href="/Content/bootstrap.css"/>
+    <link rel="stylesheet" href="/Content/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/Content/site.css"/>
+</head>
+<body ng-app="cah">
+<header>
+    <div class="margined">
+        <h2>Cards Against Humanity</h2>
+    </div>
+    <hr/>
+</header>
+<div ng-view></div>
+
+<footer>
+    <hr/>
+    <div class="margined">
+        <em>Website and API created by Robert Clabough</em>
+    </div>
+</footer>
+</body>
+</html>
+

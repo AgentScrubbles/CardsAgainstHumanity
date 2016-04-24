@@ -64,7 +64,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             return round;
         }
 
-        public IDictionary<Guid, int> GetScores()
+        public IDictionary<string, int> GetScores()
         {
             return Rounds.GroupBy(k => k.Winner).ToDictionary(k => k.Key, v => v.Count());
         } 
