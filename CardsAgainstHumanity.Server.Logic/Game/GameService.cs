@@ -35,26 +35,26 @@ namespace CardsAgainstHumanity.Server.Logic.Game
     public class GameService
     {
         private readonly ICardService _cardService;
-        private static readonly ConcurrentDictionary<Guid, Game> ActiveGames = new ConcurrentDictionary<Guid, Game>();
+        private static readonly ConcurrentDictionary<string, Game> ActiveGames = new ConcurrentDictionary<string, Game>();
 
         public GameService(ICardService cardService)
         {
             _cardService = cardService;
         }
 
-        public Guid CreateGame()
+        public string CreateGame()
         {
-            var gameId = Guid.NewGuid();
+            var gameId = StringExtensions.RandomString(6);
             ActiveGames[gameId] = new Game(_cardService);
             return gameId;
         }
 
-        public Game GetGame(Guid gameId)
+        public Game GetGame(string gameId)
         {
             return ActiveGames.Get(gameId);
         }
 
-        public void EndGame(Guid gameId)
+        public void EndGame(string gameId)
         {
             Game game;
             ActiveGames.TryRemove(gameId, out game);
