@@ -15,8 +15,8 @@ namespace CardsAgainstHumanity.Server.Data
 
     public class CardReader : ICardReader
     {
-        private const string WhiteCardFileLocation = "WhiteCards.txt";
-        private const string BlackCardFileLocation = "BlackCards.txt";
+        private const string WhiteCardFileLocation = @"C:\WhiteCards.txt";
+        private const string BlackCardFileLocation = @"C:\BlackCards.txt";
 
         public async Task<IEnumerable<WhiteCard>> GetWhiteCardsAsync()
         {
