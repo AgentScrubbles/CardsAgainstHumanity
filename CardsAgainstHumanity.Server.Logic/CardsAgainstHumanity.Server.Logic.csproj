@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Game.cs" />
+    <Compile Include="Game\GameService.cs" />
     <Compile Include="Game\Round.cs" />
     <Compile Include="LogicInjectionModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
