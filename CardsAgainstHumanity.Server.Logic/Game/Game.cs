@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CardsAgainstHumanity.Server.Data;
+using CardsAgainstHumanity.Server.Logic.Interfaces;
 using CardsAgainstHumanity.Shared.Extensions;
 
 namespace CardsAgainstHumanity.Server.Logic.Game
@@ -10,14 +11,16 @@ namespace CardsAgainstHumanity.Server.Logic.Game
     public class Game
     {
         private readonly ICardService _cardService;
+        private readonly INotificationService _notificationService;
 
-        public Game(ICardService cardService)
+        public Game(ICardService cardService, INotificationService notificationService, string gameId)
         {
             _cardService = cardService;
-            GameId = Guid.NewGuid();
+            _notificationService = notificationService;
+            GameId = gameId;
             Task.Run(Setup).Wait();
         }
-        public Guid GameId { get; }
+        public string GameId { get; }
 
         public IList<Guid> AvailableWhiteCards { get; private set; } 
         public IList<Guid> AvailableBlackCards { get; private set; }
@@ -41,6 +44,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             if (Players.All(k => k != playerId))
             {
                 Players.Add(playerId);
+                _notificationService.PlayerAdded(playerId, GameId);
             }
         }
 

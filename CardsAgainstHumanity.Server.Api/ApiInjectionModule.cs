@@ -1,4 +1,7 @@
-﻿using Ninject.Extensions.Conventions;
+﻿using CardsAgainstHumanity.Server.Api.Hubs;
+using CardsAgainstHumanity.Server.Logic.Interfaces;
+using Microsoft.AspNet.SignalR;
+using Ninject.Extensions.Conventions;
 using Ninject.Modules;
 
 namespace CardsAgainstHumanity.Server.Api

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using CardsAgainstHumanity.Server.Data;
+using CardsAgainstHumanity.Server.Logic.Interfaces;
 using CardsAgainstHumanity.Shared.Extensions;
 
 namespace CardsAgainstHumanity.Server.Logic.Game
@@ -14,10 +15,12 @@ namespace CardsAgainstHumanity.Server.Logic.Game
     public class GameServiceFactory : IGameServiceFactory
     {
         private readonly ICardService _cardService;
+        private readonly INotificationService _notificationService;
 
-        public GameServiceFactory(ICardService cardService)
+        public GameServiceFactory(ICardService cardService, INotificationService notificationService)
         {
             _cardService = cardService;
+            _notificationService = notificationService;
         }
 
         public static GameService Instance;
@@ -27,7 +30,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         {
             lock (typeof (IGameServiceFactory))
             {
-                return Instance ?? (Instance = new GameService(_cardService));
+                return Instance ?? (Instance = new GameService(_cardService, _notificationService));
             }
         }
     }
@@ -35,17 +38,19 @@ namespace CardsAgainstHumanity.Server.Logic.Game
     public class GameService
     {
         private readonly ICardService _cardService;
+        private readonly INotificationService _notificationService;
         private static readonly ConcurrentDictionary<string, Game> ActiveGames = new ConcurrentDictionary<string, Game>();
 
-        public GameService(ICardService cardService)
+        public GameService(ICardService cardService, INotificationService notificationService)
         {
             _cardService = cardService;
+            _notificationService = notificationService;
         }
 
         public string CreateGame()
         {
             var gameId = StringExtensions.RandomString(6);
-            ActiveGames[gameId] = new Game(_cardService);
+            ActiveGames[gameId] = new Game(_cardService, _notificationService, gameId);
             return gameId;
         }
 

@@ -1,5 +1,8 @@
+using CardsAgainstHumanity.Server.Api.Hubs;
 using CardsAgainstHumanity.Server.Data;
 using CardsAgainstHumanity.Server.Logic;
+using CardsAgainstHumanity.Server.Logic.Interfaces;
+using Microsoft.AspNet.SignalR;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CardsAgainstHumanity.Server.Api.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(CardsAgainstHumanity.Server.Api.App_Start.NinjectWebCommon), "Stop")]
@@ -47,7 +50,7 @@ namespace CardsAgainstHumanity.Server.Api.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-
+                kernel.Rebind<INotificationService>().ToConstant(new Player());
                 RegisterServices(kernel);
                 return kernel;
             }

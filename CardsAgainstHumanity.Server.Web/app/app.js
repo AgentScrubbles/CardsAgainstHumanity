@@ -11,7 +11,7 @@
     });
 
 
-    app.controller('MainCtrl', function ($scope, $location, apiservice, gameproperties) {
+    app.controller('MainCtrl', function ($scope, $location, apiservice, gameproperties, signalrservice) {
         $scope.showmain = true;
         $scope.showjoin = false;
         $scope.gameid = '';
@@ -21,7 +21,9 @@
             console.log('here');
             apiservice.CreateGame(function(result) {
                 gameproperties.setGameId(result);
-                $location.path('/lobby');
+                signalrservice.Initialize(function() {
+                    $location.path('/lobby');
+                });
             });
         }
         $scope.JoinGame = function() {
@@ -41,8 +43,11 @@
         }
     });
 
-    app.controller('LobbyCtrl', function($scope, apiservice, gameproperties) {
+    app.controller('LobbyCtrl', function ($scope, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.GameId = gameproperties.getGameId();
+        signalrhubs.setOnPlayerAdded(function (message) {
+            console.log(message);
+        });
     });
 
     app.controller('JoinCtrl', function ($scope, gameproperties) {
