@@ -24,12 +24,20 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
         }
 
         [HttpGet]
-        public string JoinGame(string playerId, string gameId)
+        public bool JoinGame(string playerId, string gameId)
         {
             var game = _gameService.GetGame(gameId);
             game.AddPlayer(playerId);
+            return true;
         }
 
+        [HttpGet]
+        public bool LeaveGame(string playerId, string gameId)
+        {
+            var game = _gameService.GetGame(gameId);
+            game.RemovePlayer(playerId);
+            return true;
+        }
 
         //// GET: api/Match
         //public IEnumerable<string> Get()
