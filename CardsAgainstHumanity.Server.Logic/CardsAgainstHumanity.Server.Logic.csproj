@@ -51,6 +51,7 @@
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameService.cs" />
     <Compile Include="Game\Round.cs" />
+    <Compile Include="Interfaces\INotificationFactory.cs" />
     <Compile Include="Interfaces\INotificationService.cs" />
     <Compile Include="LogicInjectionModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
