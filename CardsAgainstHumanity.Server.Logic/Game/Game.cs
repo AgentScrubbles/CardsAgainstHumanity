@@ -11,12 +11,12 @@ namespace CardsAgainstHumanity.Server.Logic.Game
     public class Game
     {
         private readonly ICardService _cardService;
-        private readonly INotificationService _notificationService;
+        private readonly INotificationFactory _notificationFactory;
 
-        public Game(ICardService cardService, INotificationService notificationService, string gameId)
+        public Game(ICardService cardService, INotificationFactory notificationFactory, string gameId)
         {
             _cardService = cardService;
-            _notificationService = notificationService;
+            _notificationFactory = notificationFactory;
             GameId = gameId;
             Task.Run(Setup).Wait();
         }
@@ -44,7 +44,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             if (Players.All(k => k != playerId))
             {
                 Players.Add(playerId);
-                _notificationService.PlayerAdded(playerId, GameId);
+                _notificationFactory.GetInstance()?.PlayerAdded(playerId, GameId);
             }
         }
 

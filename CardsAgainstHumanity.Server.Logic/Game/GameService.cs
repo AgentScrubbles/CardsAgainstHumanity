@@ -15,12 +15,12 @@ namespace CardsAgainstHumanity.Server.Logic.Game
     public class GameServiceFactory : IGameServiceFactory
     {
         private readonly ICardService _cardService;
-        private readonly INotificationService _notificationService;
+        private readonly INotificationFactory _notificationFactory;
 
-        public GameServiceFactory(ICardService cardService, INotificationService notificationService)
+        public GameServiceFactory(ICardService cardService, INotificationFactory notificationFactory)
         {
             _cardService = cardService;
-            _notificationService = notificationService;
+            _notificationFactory = notificationFactory;
         }
 
         public static GameService Instance;
@@ -30,7 +30,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         {
             lock (typeof (IGameServiceFactory))
             {
-                return Instance ?? (Instance = new GameService(_cardService, _notificationService));
+                return Instance ?? (Instance = new GameService(_cardService, _notificationFactory));
             }
         }
     }
@@ -38,19 +38,19 @@ namespace CardsAgainstHumanity.Server.Logic.Game
     public class GameService
     {
         private readonly ICardService _cardService;
-        private readonly INotificationService _notificationService;
+        private readonly INotificationFactory _notificationFactory;
         private static readonly ConcurrentDictionary<string, Game> ActiveGames = new ConcurrentDictionary<string, Game>();
 
-        public GameService(ICardService cardService, INotificationService notificationService)
+        public GameService(ICardService cardService, INotificationFactory notificationFactory)
         {
             _cardService = cardService;
-            _notificationService = notificationService;
+            _notificationFactory = notificationFactory;
         }
 
         public string CreateGame()
         {
             var gameId = StringExtensions.RandomString(6);
-            ActiveGames[gameId] = new Game(_cardService, _notificationService, gameId);
+            ActiveGames[gameId] = new Game(_cardService, _notificationFactory, gameId);
             return gameId;
         }
 
