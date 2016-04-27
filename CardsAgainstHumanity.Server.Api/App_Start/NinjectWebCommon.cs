@@ -50,7 +50,7 @@ namespace CardsAgainstHumanity.Server.Api.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-                kernel.Rebind<INotificationFactory>().To<NotificationFactory>();
+                //kernel.Rebind<INotificationFactory>().To<NotificationFactory>();
                 RegisterServices(kernel);
                 return kernel;
             }

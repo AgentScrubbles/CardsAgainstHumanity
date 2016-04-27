@@ -7,6 +7,7 @@ namespace CardsAgainstHumanity.Server.Api.Hubs
 {
     public class NotificationFactory : INotificationFactory
     {
+
         internal static Player Instance;
 
         public INotificationService GetInstance()
