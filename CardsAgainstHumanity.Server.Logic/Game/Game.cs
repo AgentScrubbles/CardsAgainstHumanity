@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CardsAgainstHumanity.Server.Data;
 using CardsAgainstHumanity.Server.Logic.Interfaces;
 using CardsAgainstHumanity.Shared.Extensions;
+using System.Collections.Concurrent;
 
 namespace CardsAgainstHumanity.Server.Logic.Game
 {
@@ -12,6 +13,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
     {
         private readonly ICardService _cardService;
         private readonly INotificationFactory _notificationFactory;
+        private const int NUM_CARDS_PER_HAND = 8;
 
         public Game(ICardService cardService, INotificationFactory notificationFactory, string gameId)
         {
@@ -26,6 +28,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         public IList<Guid> AvailableBlackCards { get; private set; }
         public bool IsRunning { get; private set; }
         public List<string> Players { get; private set; }
+        public IDictionary<string, Hand> Hands { get; private set; }
 
         public void Start()
         {
@@ -65,6 +68,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         public Round CreateRound()
         {
             var blackCardId = AvailableBlackCards.FirstOrDefault();
+            Deal();
             AvailableBlackCards.Remove(blackCardId);
             var round = new Round(_cardService, blackCardId, Players, Rounds.Count);
             Rounds.Add(round);
@@ -79,5 +83,37 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         {
             return Rounds.GroupBy(k => k.Winner).ToDictionary(k => k.Key, v => v.Count());
         } 
+
+        private void Deal()
+        {
+            //Everyone must have NUM_HAND cards available
+            //Doing this in a look to keep 'randomness', rather than dealing to one person, then the next
+            var dealt = false;
+            while (!dealt)
+            {
+                foreach (var player in Players)
+                {
+                    var playerfull = true;
+                    if (!Hands.ContainsKey(player))
+                    {
+                        Hands[player] = new Hand { CardsInHand = new ConcurrentBag<Guid>() };
+                    }
+                    if (Hands[player].CardsInHand.Count < NUM_CARDS_PER_HAND)
+                    {
+                        var card = AvailableWhiteCards.FirstOrDefault();
+                        if (card != Guid.Empty)
+                        {
+                            AvailableWhiteCards.Remove(card);
+                            Hands[player].CardsInHand.Add(card);
+                        }
+                        else
+                        {
+                            dealt = true; //No cards left
+                        }
+                        playerfull = false;
+                    }
+                }
+            }
+        }
     }
 }

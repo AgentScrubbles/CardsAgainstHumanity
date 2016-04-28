@@ -10,7 +10,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
         private readonly GameService _gameService;
 
         public RoundController(GameService gameService)
-        {
+        { 
             _gameService = gameService;
         }
 
