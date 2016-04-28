@@ -3,5 +3,6 @@
     public interface INotificationService
     {
         void PlayerAdded(string playerId, string gameId);
+        void GameReady(string gameId);
     }
 }

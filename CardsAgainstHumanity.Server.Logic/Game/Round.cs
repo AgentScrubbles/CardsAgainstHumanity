@@ -12,12 +12,15 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         private ICardService _cardService;
         private bool _roundOpen;
 
-        public Round(ICardService cardService, Guid blackCardId, IEnumerable<string> playerIds )
+        public int RoundNumber { get; private set; }
+
+        public Round(ICardService cardService, Guid blackCardId, IEnumerable<string> playerIds, int roundNum)
         {
             _cardService = cardService;
             PlayerIds = playerIds;
             BlackCardId = blackCardId;
             _roundOpen = true;
+            RoundNumber = roundNum;
             PlayerSubmittedWhiteCards = new ConcurrentDictionary<string, IEnumerable<Guid>>();
         }
 

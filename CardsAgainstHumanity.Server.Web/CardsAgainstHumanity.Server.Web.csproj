@@ -95,7 +95,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\round.js" />
     <Content Include="packages.config" />
+    <Content Include="pages\hostround.html" />
+    <Content Include="pages\round.html" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="scripts\angular.min.js.map" />
     <Content Include="scripts\angular-route.min.js.map" />

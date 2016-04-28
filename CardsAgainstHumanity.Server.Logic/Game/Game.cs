@@ -25,7 +25,13 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         public IList<Guid> AvailableWhiteCards { get; private set; } 
         public IList<Guid> AvailableBlackCards { get; private set; }
         public bool IsRunning { get; private set; }
-        public List<string> Players { get; private set; } 
+        public List<string> Players { get; private set; }
+
+        public void Start()
+        {
+            //All players are here, let's notify the players
+            _notificationFactory.GetInstance().GameReady(GameId);
+        }
 
         public List<Round> Rounds { get; private set; }  
 
@@ -60,7 +66,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         {
             var blackCardId = AvailableBlackCards.FirstOrDefault();
             AvailableBlackCards.Remove(blackCardId);
-            var round = new Round(_cardService, blackCardId, Players);
+            var round = new Round(_cardService, blackCardId, Players, Rounds.Count);
             Rounds.Add(round);
             if (AvailableBlackCards.Count == 0)
             {

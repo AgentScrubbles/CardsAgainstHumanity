@@ -5,7 +5,9 @@
         $routeProvider
           .when('/', { templateUrl: '/pages/main.html', controller: 'MainCtrl' })
           .when('/joingame', { templateUrl: '/pages/JoinGame.html', controller: 'JoinCtrl' })
-          .when('/lobby', {templateUrl: '/pages/lobby.html', controller: 'LobbyCtrl'})
+          .when('/lobby', { templateUrl: '/pages/lobby.html', controller: 'LobbyCtrl' })
+          .when('/hostround', { templateUrl: '/pages/hostround.html', controller: 'RoundHostCtrl' })
+          .when('/round', { templateUrl: '/pages/round.html', controller: 'RoundCtrl' })
           .when('/error', { templateUrl: '/pages/error.html' })
           .otherwise({ redirectTo: '/error' });
     });
@@ -33,7 +35,6 @@
         }
         $scope.JoinGameWithPlayer = function() {
             apiservice.JoinGame($scope.gameid, $scope.playerid, function(result) {
-                console.log(result);
             }, function(error) {
                 console.log(result);
             });
@@ -44,19 +45,34 @@
         }
     });
 
-    app.controller('LobbyCtrl', function ($scope, apiservice, gameproperties, signalrservice, signalrhubs) {
+    app.controller('LobbyCtrl', function ($scope, $location, $timeout, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.GameId = gameproperties.getGameId();
         $scope.Players = [];
-        console.log('Initializing Lobby');
+        $scope.GameIsReady = function () {
+            apiservice.GameReady(gameproperties.getGameId(), function (message) {
+                $timeout(function () {
+                    $location.path('/hostround');
+                    $scope.$apply();
+                });
+            }, function(error){
+
+            });
+        }
         signalrhubs.setOnPlayerAdded(function (message) {
             $scope.Players.push(message);
-            console.log($scope.Players);
             $scope.$apply();
+        });
+        signalrhubs.setOnGameReady(function (message) {
+            //$location.path('/hostround');
+            //$scope.$apply();
         });
     });
 
-    app.controller('JoinCtrl', function ($scope, gameproperties) {
-        $scope.Message = 'It worked!';
+    app.controller('JoinCtrl', function ($scope, gameproperties, signalrservice, signalrhubs) {
+        signalrhubs.setOnGameReady(function (message) {
+            $location.path('/round');
+            $scope.$apply();
+        });
     });
 
 })();

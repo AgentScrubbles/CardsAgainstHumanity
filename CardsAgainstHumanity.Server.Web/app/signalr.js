@@ -14,6 +14,9 @@
                 playerHub.client.playerAdded = function (message) {
                     signalrhubs.OnPlayerAdded(message);
                 }
+                playerHub.client.gameReady = function (message) {
+                    signalrhubs.OnGameReady(message);
+                }
                 
                         // Turn logging on so we can see the calls in the browser console
                 $.connection.logging = true;
@@ -26,14 +29,13 @@
                     }
                     done();
                 });
-                
-                
             }
         }
     });
 
     app.factory("signalrhubs", function() {
         var playerAddedFn;
+        var gameReadyFn;
 
         return {
             OnPlayerAdded(data) {
@@ -41,6 +43,12 @@
             },
             setOnPlayerAdded(callback) {
                 playerAddedFn = callback;
+            },
+            OnGameReady(data) {
+                gameReadyFn(data);
+            },
+            setOnGameReady(callback) {
+                gameReadyFn = callback;
             }
         }
     });
