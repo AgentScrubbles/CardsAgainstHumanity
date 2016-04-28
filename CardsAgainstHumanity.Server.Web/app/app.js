@@ -13,7 +13,7 @@
     });
 
 
-    app.controller('MainCtrl', function ($scope, $location, apiservice, gameproperties, signalrservice) {
+    app.controller('MainCtrl', function ($scope, $location, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.showmain = true;
         $scope.showjoin = false;
         $scope.gameid = '';
@@ -33,8 +33,17 @@
             $scope.showmain = false;
             $scope.showjoin = true;
         }
-        $scope.JoinGameWithPlayer = function() {
-            apiservice.JoinGame($scope.gameid, $scope.playerid, function(result) {
+        $scope.JoinGameWithPlayer = function () {
+            gameproperties.setGameId($scope.gameid);
+            apiservice.JoinGame($scope.gameid, $scope.playerid, function (result) {
+                signalrservice.Initialize(function () {
+                    console.log('1');
+                    signalrhubs.setOnGameReady(function (message) {
+                        console.log('Game is ready and redirecting to round');
+                        $location.path('/round');
+                        $scope.$apply();
+                    });
+                });
             }, function(error) {
                 console.log(result);
             });
@@ -43,6 +52,7 @@
             $scope.showmain = true;
             $scope.showjoin = false;
         }
+
     });
 
     app.controller('LobbyCtrl', function ($scope, $location, $timeout, apiservice, gameproperties, signalrservice, signalrhubs) {
@@ -69,10 +79,7 @@
     });
 
     app.controller('JoinCtrl', function ($scope, gameproperties, signalrservice, signalrhubs) {
-        signalrhubs.setOnGameReady(function (message) {
-            $location.path('/round');
-            $scope.$apply();
-        });
+
     });
 
 })();

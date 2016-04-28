@@ -89,6 +89,10 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             //Everyone must have NUM_HAND cards available
             //Doing this in a look to keep 'randomness', rather than dealing to one person, then the next
             var dealt = false;
+            if(Hands == null)
+            {
+                Hands = new ConcurrentDictionary<string, Hand>();
+            }
             while (!dealt)
             {
                 foreach (var player in Players)
@@ -96,9 +100,9 @@ namespace CardsAgainstHumanity.Server.Logic.Game
                     var playerfull = true;
                     if (!Hands.ContainsKey(player))
                     {
-                        Hands[player] = new Hand { CardsInHand = new ConcurrentBag<Guid>() };
+                        Hands[player] = new Hand { CardsInHand = new List<Guid>() };
                     }
-                    if (Hands[player].CardsInHand.Count < NUM_CARDS_PER_HAND)
+                    if (Hands[player].CardsInHand.Count() < NUM_CARDS_PER_HAND)
                     {
                         var card = AvailableWhiteCards.FirstOrDefault();
                         if (card != Guid.Empty)

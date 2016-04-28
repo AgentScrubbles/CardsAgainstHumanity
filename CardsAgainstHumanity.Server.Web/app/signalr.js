@@ -10,11 +10,13 @@
             Initialize: function (done) {
                 //jQuery.support.cors = true;
                 $.connection.hub.url = baseUrl + "signalr";
+                console.log('Initializing SignalR at URL ' + $.connection.hub.url);
                 var playerHub = $.connection.player;
                 playerHub.client.playerAdded = function (message) {
                     signalrhubs.OnPlayerAdded(message);
                 }
                 playerHub.client.gameReady = function (message) {
+                    console.log('game ready was called');
                     signalrhubs.OnGameReady(message);
                 }
                 
@@ -22,10 +24,13 @@
                 $.connection.logging = true;
                 console.log('Initializing signalr with url ' + $.connection.hub.url);
                 $.connection.hub.start({ jsonp: true }).done(function () {
-
+                    console.log('Subscribing with gameId ' + gameproperties.getGameId());
                     playerHub.server.subscribe(gameproperties.getGameId());
                     playerHub.client.playerAdded = function (playerName) {
-                        console.log(playerName);
+                    }
+                    playerHub.client.gameReady = function (message) {
+                        console.log('made it here for some reason');
+                        signalrhubs.OnGameReady(message);
                     }
                     done();
                 });
