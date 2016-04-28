@@ -18,11 +18,12 @@
         $scope.playerid = '';
 
         $scope.StartGame = function () {
-            console.log('here');
             apiservice.CreateGame(function(result) {
                 gameproperties.setGameId(result);
-                signalrservice.Initialize(function() {
+                signalrservice.Initialize(function () {
+                    console.log('Redirecting to lobby');
                     $location.path('/lobby');
+                    $scope.$apply();
                 });
             });
         }
@@ -45,8 +46,12 @@
 
     app.controller('LobbyCtrl', function ($scope, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.GameId = gameproperties.getGameId();
+        $scope.Players = [];
+        console.log('Initializing Lobby');
         signalrhubs.setOnPlayerAdded(function (message) {
-            console.log(message);
+            $scope.Players.push(message);
+            console.log($scope.Players);
+            $scope.$apply();
         });
     });
 

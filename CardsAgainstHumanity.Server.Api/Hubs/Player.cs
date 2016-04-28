@@ -28,7 +28,7 @@ namespace CardsAgainstHumanity.Server.Api.Hubs
             Groups.Add(Context.ConnectionId, gameId);
         }
 
-        public void PlayerAdded(string gameid, string playerid)
+        public void PlayerAdded(string playerid, string gameid)
         {
             var group = Clients.Group(gameid);
             group?.playerAdded(playerid);

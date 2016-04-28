@@ -1,3 +1,9 @@
 ﻿<div class="margined centered">
     <h2>Your game ID: {{GameId}}</h2>
+
+
+    <h3>Current players in game:</h3>
+    <ul >
+        <li ng-repeat="player in Players">{{player}}</li>
+    </ul>
 </div>

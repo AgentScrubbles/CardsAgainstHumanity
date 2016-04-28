@@ -4,35 +4,43 @@
     app.factory("signalrservice", function ($http, gameproperties, signalrhubs) {
         var baseUrl = "http://localhost:63118/";
 
+
         var playerHub;
         return {
             Initialize: function (done) {
-                jQuery.support.cors = true;
-                var playerHub = $.connection.player;
+                //jQuery.support.cors = true;
                 $.connection.hub.url = baseUrl + "signalr";
+                var playerHub = $.connection.player;
+                playerHub.client.playerAdded = function (message) {
+                    signalrhubs.OnPlayerAdded(message);
+                }
+                
                         // Turn logging on so we can see the calls in the browser console
                 $.connection.logging = true;
-
+                console.log('Initializing signalr with url ' + $.connection.hub.url);
                 $.connection.hub.start({ jsonp: true }).done(function () {
+
                     playerHub.server.subscribe(gameproperties.getGameId());
+                    playerHub.client.playerAdded = function (playerName) {
+                        console.log(playerName);
+                    }
+                    done();
                 });
-                signalrhubs.setPlayerHub(playerHub);
-                done();
+                
+                
             }
         }
     });
 
     app.factory("signalrhubs", function() {
-        var playerHub;
+        var playerAddedFn;
 
         return {
-            setPlayerHub(value) {
-                playerHub = value;
+            OnPlayerAdded(data) {
+                playerAddedFn(data);
             },
             setOnPlayerAdded(callback) {
-                playerHub.on('playerAdded', function(message) {
-                    callback(message);
-                });
+                playerAddedFn = callback;
             }
         }
     });
