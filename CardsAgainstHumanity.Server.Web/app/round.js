@@ -6,7 +6,9 @@
         }, function (error) { console.log(error); })
     });
 
-    app.controller('RoundCtrl', function ($scope) {
-
+    app.controller('RoundCtrl', function ($scope, gameproperties) {
+        apiservice.GetPlayerRound(gameproperties.getGameId(), gameproperties.getPlayerId(), function (result) {
+            console.log(result);
+        }, function (error) { });
     });
 })();

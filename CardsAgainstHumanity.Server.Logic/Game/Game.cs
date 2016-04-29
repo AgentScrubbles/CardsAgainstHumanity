@@ -36,7 +36,8 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             _notificationFactory.GetInstance().GameReady(GameId);
         }
 
-        public List<Round> Rounds { get; private set; }  
+        public List<Round> Rounds { get; private set; } 
+        public Round CurrentRound { get { return Rounds[Rounds.Count - 1]; } } 
 
         public async Task Setup()
         {

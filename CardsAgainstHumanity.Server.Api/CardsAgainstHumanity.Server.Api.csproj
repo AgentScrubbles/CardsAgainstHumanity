@@ -336,6 +336,10 @@
       <Project>{01AFD996-B356-4619-8598-7DFF0E8A0E78}</Project>
       <Name>CardsAgainstHumanity.Server.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CardsAgainstHumanity.Shared\CardsAgainstHumanity.Shared.csproj">
+      <Project>{B3C4D109-4FF2-4918-8D13-190A7B04C8D2}</Project>
+      <Name>CardsAgainstHumanity.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
