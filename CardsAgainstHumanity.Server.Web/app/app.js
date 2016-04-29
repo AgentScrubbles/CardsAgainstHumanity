@@ -23,7 +23,6 @@
             apiservice.CreateGame(function(result) {
                 gameproperties.setGameId(result);
                 signalrservice.Initialize(function () {
-                    console.log('Redirecting to lobby');
                     $location.path('/lobby');
                     $scope.$apply();
                 });
@@ -39,7 +38,6 @@
                 signalrservice.Initialize(function () {
                     console.log('1');
                     signalrhubs.setOnGameReady(function (message) {
-                        console.log('Game is ready and redirecting to round');
                         $location.path('/round');
                         $scope.$apply();
                     });
