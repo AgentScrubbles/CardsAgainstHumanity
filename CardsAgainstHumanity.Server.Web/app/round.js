@@ -1,8 +1,20 @@
 ﻿(function () {
     var app = angular.module('cah');
     app.controller('RoundHostCtrl', function ($scope, apiservice, gameproperties) {
+        $scope.GameId = gameproperties.getGameId();
+
         apiservice.CreateRound(gameproperties.getGameId(), function (roundNumber) {
             $scope.RoundNumber = roundNumber;
+            apiservice.GetHostRound($scope.GameId, function (result) {
+                $scope.Players = {};
+                for (var i = 0; i < result.Players.length; i++) {
+                    var player = result.Players[i];
+                    $scope.Players[player] = false;
+                }
+                $scope.BlackCard = result.BlackCard;
+            }, function (error) {
+                console.log(error);
+            });
         }, function (error) { console.log(error); })
     });
 

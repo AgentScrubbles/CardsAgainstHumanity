@@ -21,7 +21,7 @@
                 $http.get(baseUrl + 'Round/GetPlayerRound?GameId=' + gameid + '&PlayerId=' + playerid).then(function (result) { callback(result.data) }, errorfn);
             },
             GetHostRound: function (gameid, callback, errorfn) {
-
+                $http.get(baseUrl + 'Round/GetHostRound?GameId=' + gameid).then(function (result) { callback(result.data) }, errorfn);
             }
         }
     });

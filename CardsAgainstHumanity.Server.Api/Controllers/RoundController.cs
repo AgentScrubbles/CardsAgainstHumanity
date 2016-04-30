@@ -51,6 +51,23 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             };
             return model;
         }
+
+        [HttpGet]
+        public HostRoundModel GetHostRound(string gameId)
+        {
+            var game = _gameService.GetGame(gameId);
+            var blackCard = _cardService.GetBlackCard(game.CurrentRound.BlackCardId);
+            var model = new HostRoundModel
+            {
+                BlackCard = new BlackCardModel
+                {
+                    BlackCardId = blackCard.BlackCardId,
+                    RawValue = blackCard.RawValue
+                },
+                Players = game.Players
+            };
+            return model;
+        }
         
     }
 }

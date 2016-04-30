@@ -98,6 +98,7 @@
     <Content Include="app\round.js" />
     <Content Include="packages.config" />
     <Content Include="pages\hostround.html" />
+    <Content Include="pages\loading.html" />
     <Content Include="pages\round.html" />
     <Content Include="scripts\flipper.js" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />

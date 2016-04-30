@@ -6,16 +6,27 @@
           .when('/', { templateUrl: '/pages/main.html', controller: 'MainCtrl' })
           .when('/joingame', { templateUrl: '/pages/JoinGame.html', controller: 'JoinCtrl' })
           .when('/lobby', { templateUrl: '/pages/lobby.html', controller: 'LobbyCtrl' })
+          .when('/loading', { templateUrl: '/pages/loading.html', controller: 'LoadingCtrl' })
           .when('/hostround', { templateUrl: '/pages/hostround.html', controller: 'RoundHostCtrl' })
           .when('/round', { templateUrl: '/pages/round.html', controller: 'RoundCtrl' })
           .when('/error', { templateUrl: '/pages/error.html' })
           .otherwise({ redirectTo: '/error' });
     });
 
+    app.controller('LoadingCtrl', function ($scope, $location, gameproperties, signalrservice, signalrhubs) {
+        $scope.gameid = gameproperties.getGameId();
+        signalrservice.Initialize(function () {
+            signalrhubs.setOnGameReady(function (message) {
+                $location.path('/round');
+                $scope.$apply();
+            });
+        });
+    });
 
     app.controller('MainCtrl', function ($scope, $location, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.showmain = true;
         $scope.showjoin = false;
+        $scope.showwaiting = false;
         $scope.gameid = '';
         $scope.playerid = '';
 
@@ -36,15 +47,15 @@
             gameproperties.setGameId($scope.gameid);
             apiservice.JoinGame($scope.gameid, $scope.playerid, function (result) {
                 gameproperties.setPlayerId($scope.playerid);
+                $scope.showmain = false;
+                $scope.showjoin = false;
+                $scope.showwaiting = true;
                 if (result) {
                     $location.path('/round');
                 } else {
-                    signalrservice.Initialize(function () {
-                        signalrhubs.setOnGameReady(function (message) {
-                            $location.path('/round');
-                            $scope.$apply();
-                        });
-                    });
+                    $location.path('/loading');
+
+
                 }
             }, function(error) {
                 console.log(result);
