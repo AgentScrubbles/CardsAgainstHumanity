@@ -96,6 +96,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             }
             while (!dealt)
             {
+                dealt = true;
                 foreach (var player in Players)
                 {
                     var playerfull = true;
@@ -117,6 +118,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
                         }
                         playerfull = false;
                     }
+                    dealt = dealt && playerfull;
                 }
             }
         }

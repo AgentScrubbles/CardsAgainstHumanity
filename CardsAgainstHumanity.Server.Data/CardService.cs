@@ -19,9 +19,9 @@ namespace CardsAgainstHumanity.Server.Data
     public class CardService : ICardService
     {
         private readonly ICardReader _cardReader;
-        private IDictionary<Guid, WhiteCard> _whiteCards;
-        private IDictionary<Guid, BlackCard> _blackCards;
-        private bool _isInitialized = false;
+        private static IDictionary<Guid, WhiteCard> _whiteCards;
+        private static IDictionary<Guid, BlackCard> _blackCards;
+        private static bool _isInitialized = false;
 
 
         public CardService(ICardReader cardReader)

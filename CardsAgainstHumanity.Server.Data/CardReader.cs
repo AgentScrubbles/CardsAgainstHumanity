@@ -23,9 +23,12 @@ namespace CardsAgainstHumanity.Server.Data
             var whiteCards = new ConcurrentBag<WhiteCard>();
             using (var sr = new StreamReader(WhiteCardFileLocation))
             {
-                var line = await sr.ReadLineAsync();
-                var card = new WhiteCard {Value = line, WhiteCardId = Guid.NewGuid()};
-                whiteCards.Add(card);
+                while (!sr.EndOfStream)
+                {
+                    var line = await sr.ReadLineAsync();
+                    var card = new WhiteCard { Value = line, WhiteCardId = Guid.NewGuid() };
+                    whiteCards.Add(card);
+                }
             }
             return whiteCards;
         }
@@ -35,9 +38,12 @@ namespace CardsAgainstHumanity.Server.Data
             var blackCards = new ConcurrentBag<BlackCard>();
             using (var sr = new StreamReader(BlackCardFileLocation))
             {
-                var line = await sr.ReadLineAsync();
-                var card = new BlackCard {RawValue = line, BlackCardId = Guid.NewGuid()};
-                blackCards.Add(card);
+                while (!sr.EndOfStream)
+                {
+                    var line = await sr.ReadLineAsync();
+                    var card = new BlackCard { RawValue = line, BlackCardId = Guid.NewGuid() };
+                    blackCards.Add(card);
+                }
             }
             return blackCards;
         }
