@@ -1,1 +1,9 @@
-﻿<h1>Round.html</h1>
+﻿<h1>Round #{{RoundNumber}}</h1>
+
+<div class="card-blk card-lg card">
+    <h4>{{BlackCard.BlankValue}}</h4>
+</div>
+
+<div class="card-lg card" ng-repeat="whiteCard in WhiteCards">
+    <h4>{{whiteCard.Value}}</h4>
+</div>

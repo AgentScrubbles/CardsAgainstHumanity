@@ -74,10 +74,20 @@ pre {
     text-align: center;
 }
 
+.card-blk {
+    background-color: #000;
+    color: #fff;
+}
+
+.card-lg {
+    width: 12em;
+    height: 18em;
+}
+
 .card {
     display: inline-block;
-    width: 3.3em;
-    height: 4.6em;
+    width: 12em;
+    height: 18em;
     border: 1px solid #666;
     -moz-border-radius: .3em;
     -webkit-border-radius: .3em;

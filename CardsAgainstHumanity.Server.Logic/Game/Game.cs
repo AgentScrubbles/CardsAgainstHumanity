@@ -45,7 +45,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             AvailableBlackCards = (await _cardService.GetAllBlackCards()).Select(k => k.Key).Shuffle().ToList();
             Rounds = new List<Round>();
             Players = new List<string>();
-            IsRunning = true;
+            IsRunning = false;
         }
 
         public void AddPlayer(string playerId)
@@ -76,6 +76,9 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             if (AvailableBlackCards.Count == 0)
             {
                 IsRunning = false;
+            }else
+            {
+                IsRunning = true;
             }
             return round;
         }

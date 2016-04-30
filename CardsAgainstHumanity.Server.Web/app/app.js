@@ -35,13 +35,17 @@
         $scope.JoinGameWithPlayer = function () {
             gameproperties.setGameId($scope.gameid);
             apiservice.JoinGame($scope.gameid, $scope.playerid, function (result) {
-                signalrservice.Initialize(function () {
-                    console.log('1');
-                    signalrhubs.setOnGameReady(function (message) {
-                        $location.path('/round');
-                        $scope.$apply();
+                gameproperties.setPlayerId($scope.playerid);
+                if (result) {
+                    $location.path('/round');
+                } else {
+                    signalrservice.Initialize(function () {
+                        signalrhubs.setOnGameReady(function (message) {
+                            $location.path('/round');
+                            $scope.$apply();
+                        });
                     });
-                });
+                }
             }, function(error) {
                 console.log(result);
             });

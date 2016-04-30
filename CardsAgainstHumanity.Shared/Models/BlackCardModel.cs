@@ -11,9 +11,9 @@ namespace CardsAgainstHumanity.Shared.Models
     {
         public Guid BlackCardId { get; set; }
         public string RawValue { get; set; }
-        public int Pick { get { return Regex.Matches(RawValue, "**").Count; } }
+        public int Pick { get { return Regex.Matches(RawValue, "{}").Count + 1; } }
 
-        public string BlankValue { get { return string.Format(FormattableValue, Enumerable.Range(0, Pick - 1).Select(k => "____")); } }
+        public string BlankValue { get { return string.Format(FormattableValue, Enumerable.Range(0, Pick).Select(k => "____").ToArray()); } }
 
         public string FormattableValue
         {
@@ -21,7 +21,7 @@ namespace CardsAgainstHumanity.Shared.Models
             {
                 for (var i = 0; i < Pick; i++)
                 {
-                    var regex = new Regex(Regex.Escape("**"));
+                    var regex = new Regex(Regex.Escape("{}"));
                     var fs = "{" + i + "}";
                     RawValue = regex.Replace(RawValue, fs, 1);
                 }

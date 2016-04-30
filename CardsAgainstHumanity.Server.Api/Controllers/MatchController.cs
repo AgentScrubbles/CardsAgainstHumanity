@@ -26,7 +26,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
         {
             var game = _gameService.GetGame(model.GameId);
             game.AddPlayer(model.PlayerId);
-            return true;
+            return game.IsRunning;
         }
 
         public class JoinGameModel
