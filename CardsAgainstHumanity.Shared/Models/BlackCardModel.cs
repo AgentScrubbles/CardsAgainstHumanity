@@ -11,21 +11,29 @@ namespace CardsAgainstHumanity.Shared.Models
     {
         public Guid BlackCardId { get; set; }
         public string RawValue { get; set; }
-        public int Pick { get { return Regex.Matches(RawValue, "{}").Count + 1; } }
+        public int Pick { get { return Regex.Matches(RawValue, "{}").Count; } }
 
-        public string BlankValue { get { return string.Format(FormattableValue, Enumerable.Range(0, Pick).Select(k => "____").ToArray()); } }
+        public string BlankValue
+        {
+            get
+            {
+                var arr = Enumerable.Range(0, Pick).Select(k => "____").ToArray();
+                return string.Format(FormattableValue, arr);
+            }
+        }
 
         public string FormattableValue
         {
             get
             {
+                var val = RawValue;
                 for (var i = 0; i < Pick; i++)
                 {
                     var regex = new Regex(Regex.Escape("{}"));
                     var fs = "{" + i + "}";
-                    RawValue = regex.Replace(RawValue, fs, 1);
+                    val = regex.Replace(val, fs, 1);
                 }
-                return RawValue;
+                return val;
             }
         }
 
