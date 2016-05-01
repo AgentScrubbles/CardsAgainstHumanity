@@ -44,6 +44,7 @@
     <Compile Include="Models\BlackCardModel.cs" />
     <Compile Include="Models\HostRoundModel.cs" />
     <Compile Include="Models\PlayerRoundModel.cs" />
+    <Compile Include="Models\PlayerSubmissionModel.cs" />
     <Compile Include="Models\SubmitCardModel.cs" />
     <Compile Include="Models\WhiteCardModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

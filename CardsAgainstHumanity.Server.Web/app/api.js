@@ -25,6 +25,9 @@
             },
             SubmitCard: function (gameid, playerid, cardids, callback, errorfn) {
                 $http.post(baseUrl + 'Round/Submit', { GameId: gameid, PlayerId: playerid, CardIds: cardids }).then(function (result) { callback(result.data) }, errorfn);
+            },
+            GetSubmissions: function (gameid, callback, errorfn) {
+                $http.get(baseUrl + 'Round/Submissions?GameId=' + gameid).then(function (result) { callback(result.data), errorfn });
             }
         }
     });

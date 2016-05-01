@@ -1,6 +1,7 @@
 ﻿using CardsAgainstHumanity.Server.Data;
 using CardsAgainstHumanity.Server.Logic.Game;
 using CardsAgainstHumanity.Shared.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -50,6 +51,20 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
                 })
             };
             return model;
+        }
+
+        [HttpGet]
+        public IEnumerable<PlayerSubmissionModel> Submissions(string gameId)
+        {
+            var game = _gameService.GetGame(gameId);
+            var blackCard = _cardService.GetBlackCard(game.CurrentRound.BlackCardId);
+            var blackCardModel = new BlackCardModel { BlackCardId = blackCard.BlackCardId, RawValue = blackCard.RawValue };
+            var models = game.CurrentRound.PlayerSubmittedWhiteCards.Select(k => new PlayerSubmissionModel
+            {
+                PlayerId = k.Key,
+                SubmittedAnswer = string.Format(blackCardModel.FormattableValue, k.Value.ToArray())
+            });
+            return models;
         }
 
         [HttpGet]
