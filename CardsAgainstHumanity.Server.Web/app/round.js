@@ -1,6 +1,6 @@
 ﻿(function () {
     var app = angular.module('cah');
-    app.controller('RoundHostCtrl', function ($scope, apiservice, gameproperties) {
+    app.controller('RoundHostCtrl', function ($scope, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.GameId = gameproperties.getGameId();
 
         apiservice.CreateRound(gameproperties.getGameId(), function (roundNumber) {
@@ -15,7 +15,11 @@
             }, function (error) {
                 console.log(error);
             });
-        }, function (error) { console.log(error); })
+        }, function (error) { console.log(error); });
+
+        signalrhubs.setOnPlayerSubmitted(function (playeraddedid) {
+            $scope.Players[playeraddedid] = true;
+        });
     });
 
     app.controller('RoundCtrl', function ($scope, gameproperties, apiservice) {

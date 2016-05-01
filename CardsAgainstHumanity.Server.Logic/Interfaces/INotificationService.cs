@@ -4,5 +4,6 @@
     {
         void PlayerAdded(string playerId, string gameId);
         void GameReady(string gameId);
+        void PlayerSubmitted(string playerId, string gameId);
     }
 }

@@ -4,23 +4,27 @@ using System.Collections.Generic;
 using System.Linq;
 using CardsAgainstHumanity.Server.Data;
 using CardsAgainstHumanity.Shared.Extensions;
+using CardsAgainstHumanity.Server.Logic.Interfaces;
 
 namespace CardsAgainstHumanity.Server.Logic.Game
 {
     public class Round
     {
         private ICardService _cardService;
+        private INotificationService _notificationService;
         private bool _roundOpen;
-
+        public string GameId { get; private set; }
         public int RoundNumber { get; private set; }
 
-        public Round(ICardService cardService, Guid blackCardId, IEnumerable<string> playerIds, int roundNum)
+        public Round(ICardService cardService, Guid blackCardId, IEnumerable<string> playerIds, int roundNum, string gameId, INotificationService notificationService)
         {
             _cardService = cardService;
             PlayerIds = playerIds;
             BlackCardId = blackCardId;
             _roundOpen = true;
             RoundNumber = roundNum;
+            _notificationService = notificationService;
+            GameId = gameId;
             PlayerSubmittedWhiteCards = new ConcurrentDictionary<string, IEnumerable<Guid>>();
         }
 
@@ -33,6 +37,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         public bool SubmitCards(string playerId, IEnumerable<Guid> whiteCards)
         {
             PlayerSubmittedWhiteCards[playerId] = whiteCards;
+            _notificationService.PlayerSubmitted(playerId, GameId);
             return AllPlayersSubmitted();
         }
 

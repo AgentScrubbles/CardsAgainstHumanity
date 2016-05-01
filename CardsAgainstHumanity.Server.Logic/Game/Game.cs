@@ -71,7 +71,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             var blackCardId = AvailableBlackCards.FirstOrDefault();
             Deal();
             AvailableBlackCards.Remove(blackCardId);
-            var round = new Round(_cardService, blackCardId, Players, Rounds.Count);
+            var round = new Round(_cardService, blackCardId, Players, Rounds.Count, GameId, _notificationFactory.GetInstance());
             Rounds.Add(round);
             if (AvailableBlackCards.Count == 0)
             {

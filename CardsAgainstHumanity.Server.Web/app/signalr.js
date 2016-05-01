@@ -17,6 +17,9 @@
                 console.log('game ready was called');
                 signalrhubs.OnGameReady(message);
             }
+            playerHub.client.playerSubmitted = function (message) {
+                signalrhubs.OnPlayerSubmitted(message);
+            }
                 
             // Turn logging on so we can see the calls in the browser console
             $.connection.logging = true;
@@ -29,6 +32,9 @@
                 playerHub.client.gameReady = function (message) {
                     console.log('made it here for some reason');
                     signalrhubs.OnGameReady(message);
+                }
+                playerHub.client.playerSubmitted = function (player) {
+                    signalrhubs.OnPlayerSubmitted(player);
                 }
                 done();
             });
@@ -54,6 +60,7 @@
     app.factory("signalrhubs", function() {
         var playerAddedFn;
         var gameReadyFn;
+        var playerSubmittedFn;
 
         return {
             OnPlayerAdded(data) {
@@ -67,6 +74,12 @@
             },
             setOnGameReady(callback) {
                 gameReadyFn = callback;
+            },
+            OnPlayerSubmitted(data) {
+                playerSubmittedFn(data);
+            },
+            setOnPlayerSubmitted(callback) {
+                playerSubmittedFn = callback;
             }
         }
     });

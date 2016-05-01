@@ -39,5 +39,11 @@ namespace CardsAgainstHumanity.Server.Api.Hubs
             var group = Clients.Group(gameId);
             group?.gameReady("Ready");
         }
+
+        public void PlayerSubmitted(string playerId, string gameId)
+        {
+            var group = Clients.Group(gameId);
+            group?.playerSubmitted(playerId);
+        }
     }
 }
