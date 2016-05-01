@@ -22,6 +22,9 @@
             },
             GetHostRound: function (gameid, callback, errorfn) {
                 $http.get(baseUrl + 'Round/GetHostRound?GameId=' + gameid).then(function (result) { callback(result.data) }, errorfn);
+            },
+            SubmitCard: function (gameid, playerid, cardids, callback, errorfn) {
+                $http.post(baseUrl + 'Round/Submit', { GameId: gameid, PlayerId: playerid, CardIds: cardids }).then(function (result) { callback(result.data) }, errorfn);
             }
         }
     });

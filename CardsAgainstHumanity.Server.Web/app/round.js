@@ -78,7 +78,17 @@
             assignPositions();
         }
 
-        
+        $scope.Submit = function () {
+            var cardIds = [];
+            for (var i = 0; i < $scope.Picks.length; i++) {
+                cardIds[i] = $scope.Picks[i].card.WhiteCardId;
+            }
+            apiservice.SubmitCard(gameproperties.getGameId(), gameproperties.getPlayerId(), cardIds, function (result) {
+                //Do something while waiting
+            }, function (error) {
+                console.log(error);
+            });
+        }
 
         $scope.Select = function (index, pick) {
             var chosen = $scope.Items[index];

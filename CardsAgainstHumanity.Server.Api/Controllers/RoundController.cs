@@ -68,6 +68,13 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             };
             return model;
         }
+
+        [HttpPost]
+        public void Submit([FromBody]SubmitCardModel model)
+        {
+            var game = _gameService.GetGame(model.GameId);
+            game.CurrentRound.SubmitCards(model.PlayerId, model.CardIds);
+        }
         
     }
 }
