@@ -28,6 +28,9 @@
             },
             GetSubmissions: function (gameid, callback, errorfn) {
                 $http.get(baseUrl + 'Round/Submissions?GameId=' + gameid).then(function (result) { callback(result.data), errorfn });
+            },
+            PlayersWhoSubmitted: function(gameId, callback, errorfn) {
+                $http.get(baseUrl + 'Round/PlayersWhoSubmitted?GameId=' + gameId).then(function(result) { callback(result.data), errorfn });
             }
         }
     });

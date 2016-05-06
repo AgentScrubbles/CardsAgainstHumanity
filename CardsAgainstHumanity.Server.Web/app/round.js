@@ -22,10 +22,12 @@
         });
     });
 
-    app.controller('RoundCtrl', function ($scope, gameproperties, apiservice) {
+    app.controller('RoundCtrl', function ($scope, gameproperties, apiservice, signalrservice, signalrhubs) {
         console.log('PlayerId: ' + gameproperties.getPlayerId());
         $scope.Items = [];
         $scope.Picks = [];
+        $scope.HasSubmitted = false;
+        $scope.PlayersWhoSubmitted = [];
 
         $scope.GetPicks = function () {
             var arr = [$scope.BlackCard.Pick];
@@ -97,6 +99,13 @@
                 cardIds[i] = $scope.Picks[i].card.WhiteCardId;
             }
             apiservice.SubmitCard(gameproperties.getGameId(), gameproperties.getPlayerId(), cardIds, function (result) {
+                $scope.HasSubmitted = true;
+                apiservice.PlayersWhoSubmitted(gameproperties.getGameId(), function(result) {
+                    $scope.PlayersWhoSubmitted = result;
+
+                }, function(error) {
+                    console.log(error);
+                })
                 //Do something while waiting
             }, function (error) {
                 console.log(error);
@@ -122,5 +131,8 @@
             $scope.RoundNumber = result.RoundNumber;
             $scope.Readout = $scope.BlackCard.BlankValue;
         }, function (error) { });
+        signalrhubs.setOnPlayerSubmitted(function (playeraddedid) {
+            $scope.PlayersWhoSubmitted.push(playeraddedid);
+        });
     });
 })();

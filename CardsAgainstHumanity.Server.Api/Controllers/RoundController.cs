@@ -54,6 +54,13 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
         }
 
         [HttpGet]
+        public IEnumerable<string> PlayersWhoSubmitted(string gameId)
+        {
+            var game = _gameService.GetGame(gameId);
+            return game.CurrentRound.PlayerSubmittedWhiteCards.Select(k => k.Key);
+        }
+
+        [HttpGet]
         public IEnumerable<PlayerSubmissionModel> Submissions(string gameId)
         {
             var game = _gameService.GetGame(gameId);

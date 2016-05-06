@@ -7,32 +7,41 @@
         </div>
     </div>
     <div class="col-md-9">
-        <h4>{{Readout}}</h4>
-        <button class="btn btn-lg" ng-click="Submit()">Submit</button>
+        <div ng-show="!HasSubmitted">
+            <h4>{{Readout}}</h4>
+            <button class="btn btn-lg" ng-click="Submit()">Submit</button>
+        </div>
+        <div ng-show="HasSubmitted">
+            <h2>Submitted Players:</h2>
+            <ul>
+                <li ng-repeat="player in PlayersWhoSubmitted">player</li>
+            </ul>
+        </div>
     </div>
 </div>
 
-<div class="centered">
-    <a ng-click="scroll('prev')"><span class="glyphicon glyphicon-chevron-left"></span></a>
-    <a ng-click="scroll('next')"><span class="glyphicon glyphicon- glyphicon-chevron-right"></span></a>
-</div>
-<div class="content" style="height: 300px">
-    <div id="scroller">
-        <div class="nav">
-            <a class="prev">&laquo;</a>
-            <a class="next">&raquo;</a>
-        </div>
-        <div class="item" ng-class="item.css" href="#" ng-repeat="item in Items">
-            <div class="card-lg card">
-                <h4>{{item.card.Value}}</h4>
-                <div ng-repeat="pick in GetPicks()">
-                    <button class="btn" ng-click="Select(item.card.WhiteCardId, pick)">Pick {{pick+1}}</button>
+<div ng-show="!HasSubmitted">
+    <div class="centered">
+        <a ng-click="scroll('prev')"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a ng-click="scroll('next')"><span class="glyphicon glyphicon- glyphicon-chevron-right"></span></a>
+    </div>
+    <div class="content" style="height: 300px">
+        <div id="scroller">
+            <div class="nav">
+                <a class="prev">&laquo;</a>
+                <a class="next">&raquo;</a>
+            </div>
+            <div class="item" ng-class="item.css" href="#" ng-repeat="item in Items">
+                <div class="card-lg card">
+                    <h4>{{item.card.Value}}</h4>
+                    <div ng-repeat="pick in GetPicks()">
+                        <button class="btn" ng-click="Select(item.card.WhiteCardId, pick)">Pick {{pick+1}}</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <style>
 
     .glyphicon.glyphicon-chevron-left, .glyphicon-chevron-right {
