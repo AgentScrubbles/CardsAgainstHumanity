@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-3">
-        <div class="card-blk">
+        <div class="card card-blk card-lg">
             <h4>{{BlackCard.BlankValue}}</h4>
         </div>
     </div>
@@ -16,7 +16,7 @@
     <a ng-click="scroll('prev')"><span class="glyphicon glyphicon-chevron-left"></span></a>
     <a ng-click="scroll('next')"><span class="glyphicon glyphicon- glyphicon-chevron-right"></span></a>
 </div>
-<div class="content">
+<div class="content" style="height: 300px">
     <div id="scroller">
         <div class="nav">
             <a class="prev">&laquo;</a>
@@ -26,27 +26,12 @@
             <div class="card-lg card">
                 <h4>{{item.card.Value}}</h4>
                 <div ng-repeat="pick in GetPicks()">
-                    <button class="btn" ng-click="Select(item.index, pick)">Pick {{pick+1}}</button>
+                    <button class="btn" ng-click="Select(item.card.WhiteCardId, pick)">Pick {{pick+1}}</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-<!--<div class="slider">
-    <input type="radio" id="slide2" name="slide" checked="">
-    <input type="radio" id="slide3" name="slide">
-    <input type="radio" id="slide4" name="slide">
-    <ul>
-        <li ng-repeat="whiteCard in WhiteCards">
-            <div class="card-lg card">
-                <h4>{{whiteCard.Value}}</h4>
-            </div>
-        </li>
-    </ul>
-</div>-->
-
 
 <style>
 
@@ -80,8 +65,7 @@
   -o-perspective: 500px;
 }
 
-#scroller .item {
-  width: 500px;
+ .item {
   display: block;
   position: absolute;
   border-radius: 10px;
@@ -93,7 +77,7 @@
 }
 
 /* Since inset shadows don't play nice with images, we'll create a pseudo element and apply our image styling to that instead */
-#scroller .item:before {
+ .item:before {
   border-radius: 10px;
   width: 500px;
   display: block;
@@ -104,31 +88,31 @@
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3), 0 0 0 1px rgba(0,0,0,0.4);
 }
 
-#scroller .item img {
+ .item img {
   display: block;
   border-radius: 10px;
 }
 
-#scroller .left {
+ .left {
   -webkit-transform: rotateY(25deg) translateX(-320px) skewY(-5deg) scale(0.4, 0.6);
   -moz-transform: rotateY(25deg) translateX(-320px) skewY(-5deg) scale(0.4, 0.6);
   -o-transform: rotateY(25deg) translateX(-320px) skewY(-5deg) scale(0.4, 0.6);
 }
 
-#scroller .middle {
+ .middle {
   z-index:1;
   -webkit-transform: rotateY(0deg) translateX(0) scale(1);
   -moz-transform: rotateY(0deg) translateX(0) scale(1);
   -o-transform: rotateY(0deg) translateX(0) scale(1);
 }
 
-#scroller .right {
+ .right {
   -webkit-transform: rotateY(-25deg) translateX(320px) skewY(5deg) scale(0.4, 0.6);
   -moz-transform: rotateY(-25deg) translateX(320px) skewY(5deg) scale(0.4, 0.6);
   -o-transform: rotateY(-25deg) translateX(320px) skewY(5deg) scale(0.4, 0.6);
 }
 
-#scroller .left-hidden {
+ .left-hidden {
   opacity: 0;
   z-index: -1;
   -webkit-transform: rotateY(25deg) translateX(-430px) skewY(-5deg) scale(0.3, 0.5);
@@ -136,7 +120,7 @@
   -o-transform: rotateY(25deg) translateX(-430px) skewY(-5deg) scale(0.3, 0.5);
 }
 
-#scroller .right-hidden {
+ .right-hidden {
   opacity: 0;
   z-index: -1;
   -webkit-transform: rotateY(-25deg) translateX(430px) skewY(5deg) scale(0.3, 0.5);
@@ -172,6 +156,10 @@
 .next {
   left: inherit;
   right: 15px;
+}
+.prev {
+    left: 15px;
+    right: inherit;
 }
 
 .prev:hover, .next:hover {

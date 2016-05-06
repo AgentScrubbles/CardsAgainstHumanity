@@ -69,16 +69,25 @@
                     $scope.Items[i].css = 'right-hidden';
                 }
             }
-
         }
 
-        $scope.scroll = function(direction) {
-            if (direction === 'prev') {
-                $scope.Items.push($scope.Items.shift());
-            } else if (direction === 'next') {
-                $scope.Items.unshift($scope.Items.pop());
+        function getFromId(whiteCardId) {
+            for (var index in $scope.Items) {
+                if ($scope.Items[index].card.WhiteCardId === whiteCardId) {
+                    return $scope.Items[index];
+                }
             }
+        }
+
+        $scope.scroll = function (direction) {
             clearPositions();
+            if (direction === 'prev') {
+                var itemToShift = $scope.Items.shift();
+                $scope.Items.push(itemToShift);
+            } else if (direction === 'next') {
+                var pop = $scope.Items.pop();
+                $scope.Items.unshift(pop);
+            }
             assignPositions();
         }
 
@@ -94,8 +103,8 @@
             });
         }
 
-        $scope.Select = function (index, pick) {
-            var chosen = $scope.Items[index];
+        $scope.Select = function (id, pick) {
+            var chosen = getFromId(id);
             $scope.Picks[pick] = chosen;
             $scope.Readout = format($scope.BlackCard.FormattableValue);
         }
