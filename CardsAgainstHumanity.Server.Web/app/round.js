@@ -3,7 +3,7 @@
     app.controller('RoundHostCtrl', function ($scope, $location, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.GameId = gameproperties.getGameId();
         $scope.CountdownEnabled = true;
-        $scope.MaxTime = 30; //Thirty seconds max
+        $scope.MaxTime = parseInt(gameproperties.getMaxTime());
         $scope.RemainingSeconds = $scope.MaxTime;
 
         var allplayerssubmitted = function() {
@@ -15,6 +15,10 @@
                 $scope.RoundOver = all;
             }
             return all;
+        }
+
+        $scope.ChangeMaxTime = function() {
+            gameproperties.setMaxTime($scope.MaxTime);
         }
 
         var completeRound = function() {
@@ -68,8 +72,7 @@
         startround();
     });
 
-    app.controller('RoundCtrl', function ($scope, gameproperties, apiservice, signalrservice, signalrhubs) {
-        console.log('PlayerId: ' + gameproperties.getPlayerId());
+    app.controller('RoundCtrl', function ($scope, $location, gameproperties, apiservice, signalrservice, signalrhubs) {
         $scope.Items = [];
         $scope.Picks = [];
         $scope.HasSubmitted = false;
@@ -147,12 +150,7 @@
             }
             apiservice.SubmitCard(gameproperties.getGameId(), gameproperties.getPlayerId(), cardIds, function (result) {
                 $scope.HasSubmitted = true;
-                apiservice.PlayersWhoSubmitted(gameproperties.getGameId(), function(result) {
-                    $scope.PlayersWhoSubmitted = result;
-
-                }, function(error) {
-                    console.log(error);
-                })
+                $location.path('/loading');
                 //Do something while waiting
             }, function (error) {
                 console.log(error);

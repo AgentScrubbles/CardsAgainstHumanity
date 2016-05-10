@@ -115,7 +115,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
         public void Submit([FromBody]SubmitCardModel model)
         {
             var game = _gameService.GetGame(model.GameId);
-            game.CurrentRound.SubmitCards(model.PlayerId, model.CardIds);
+            game.SubmitCards(model.PlayerId, model.CardIds);
         }
 
         [HttpPost]
@@ -123,6 +123,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
         {
             var game = _gameService.GetGame(model.GameId);
             game.CurrentRound.SubmitWinner(model.PlayerId);
+            
         }
 
 

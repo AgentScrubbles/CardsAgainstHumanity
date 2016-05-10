@@ -61,6 +61,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             if(_roundOpen) throw new InvalidOperationException("Cannot submit a winner while the round is over!");
             WinningWhiteCards = PlayerSubmittedWhiteCards.Get(playerId);
             Winner = playerId;
+            _notificationService.GameReady(GameId);
         }
     }
 }

@@ -125,5 +125,12 @@ namespace CardsAgainstHumanity.Server.Logic.Game
                 }
             }
         }
+
+        public void SubmitCards(string playerId, IEnumerable<Guid> cardIds)
+        {
+            var cards = cardIds.ToList();
+            CurrentRound.SubmitCards(playerId, cards);
+            cards.ForEach(k => Hands.Get(playerId).CardsInHand.Remove(k));
+        }
     }
 }

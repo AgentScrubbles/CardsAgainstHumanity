@@ -36,5 +36,7 @@
     </div>
 </div>
 <div>
+    <input type="text" class="form-control" ng-model="MaxTime" ng-change="ChangeMaxTime()"/>
+
     <uib-progressbar class="progress-striped active" max="RoundTime" value="RemainingSeconds" type="success"><i>{{RemainingSeconds}} seconds</i></uib-progressbar>
 </div>
