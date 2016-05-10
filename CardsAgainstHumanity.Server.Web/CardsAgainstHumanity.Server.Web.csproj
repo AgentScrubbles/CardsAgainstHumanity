@@ -95,11 +95,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\pickwinner.js" />
     <Content Include="app\round.js" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="packages.config" />
     <Content Include="pages\hostround.html" />
     <Content Include="pages\loading.html" />
+    <Content Include="pages\pickwinner.html" />
     <Content Include="pages\round.html" />
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-animate.min.js" />

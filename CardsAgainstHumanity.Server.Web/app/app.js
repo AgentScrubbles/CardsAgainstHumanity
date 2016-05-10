@@ -9,6 +9,7 @@
           .when('/loading', { templateUrl: '/pages/loading.html', controller: 'LoadingCtrl' })
           .when('/hostround', { templateUrl: '/pages/hostround.html', controller: 'RoundHostCtrl' })
           .when('/round', { templateUrl: '/pages/round.html', controller: 'RoundCtrl' })
+          .when('/pickwinner', { templateUrl: '/pages/pickwinner.html', controller: 'PickWinnerCtrl' })
           .when('/error', { templateUrl: '/pages/error.html' })
           .otherwise({ redirectTo: '/error' });
     });

@@ -69,7 +69,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             var models = game.CurrentRound.PlayerSubmittedWhiteCards.Select(k => new PlayerSubmissionModel
             {
                 PlayerId = k.Key,
-                SubmittedAnswer = string.Format(blackCardModel.FormattableValue, k.Value.ToArray())
+                SubmittedAnswer = string.Format(blackCardModel.FormattableValue, k.Value.Select(j => _cardService.GetWhiteCard(j).Value).ToArray())
             });
             return models;
         }
