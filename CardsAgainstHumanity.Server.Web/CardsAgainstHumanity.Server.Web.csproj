@@ -96,16 +96,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\round.js" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="packages.config" />
     <Content Include="pages\hostround.html" />
     <Content Include="pages\loading.html" />
     <Content Include="pages\round.html" />
+    <Content Include="scripts\angular-animate.js" />
+    <Content Include="scripts\angular-animate.min.js" />
+    <Content Include="scripts\angular-touch.js" />
+    <Content Include="scripts\angular-touch.min.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="scripts\flipper.js" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="scripts\angular.min.js.map" />
     <Content Include="scripts\angular-route.min.js.map" />
     <Content Include="scripts\angular-resource.min.js.map" />
     <Content Include="scripts\jquery-1.9.1.min.map" />
+    <Content Include="scripts\angular-animate.min.js.map" />
+    <Content Include="scripts\angular-touch.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

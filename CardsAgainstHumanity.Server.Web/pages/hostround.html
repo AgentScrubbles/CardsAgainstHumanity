@@ -1,11 +1,14 @@
 ﻿
+
 <div class="row">
     <div class="col-md-3">
         <h1>Players:</h1>
         <hr/>
-        <div ng-repeat="(id, submitted) in Players">
-            <h2>{{id}}</h2>
-            <span class="glyphicon glyphicon-check" ng-show="submitted"></span> 
+        <div class="margined" ng-repeat="(id, submitted) in Players">
+            <h2>{{id}}
+                <span class="glyphicon glyphicon-remove" style="color: red" ng-show="!submitted"></span>
+                <span class="glyphicon glyphicon-check" style="color: green" ng-show="submitted"></span>
+            </h2>
         </div>
     </div>
     <div class="col-md-7">
@@ -20,4 +23,7 @@
         <br/>
         <h2>Round #{{RoundNumber}}</h2>
     </div>
+</div>
+<div>
+    <uib-progressbar class="progress-striped active" max="RoundTime" value="RemainingSeconds" type="success"><i>{{RemainingSeconds}} seconds</i></uib-progressbar>
 </div>

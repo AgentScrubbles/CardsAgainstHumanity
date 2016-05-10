@@ -2,24 +2,66 @@
     var app = angular.module('cah');
     app.controller('RoundHostCtrl', function ($scope, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.GameId = gameproperties.getGameId();
+        $scope.CountdownEnabled = true;
+        $scope.MaxTime = 30; //Thirty seconds max
+        $scope.RemainingSeconds = $scope.MaxTime;
 
-        apiservice.CreateRound(gameproperties.getGameId(), function (roundNumber) {
-            $scope.RoundNumber = roundNumber;
-            apiservice.GetHostRound($scope.GameId, function (result) {
-                $scope.Players = {};
-                for (var i = 0; i < result.Players.length; i++) {
-                    var player = result.Players[i];
-                    $scope.Players[player] = false;
+        var allplayerssubmitted = function() {
+            var all = true;
+            for (var i in $scope.Players) {
+                all = all && $scope.Players[i];
+            }
+            if (all) {
+                $scope.RoundOver = all;
+            }
+            return all;
+        }
+
+        var completeRound = function() {
+            
+        }
+
+        var countdown = function () {
+            var refreshId = setInterval(function () {
+                if ($scope.CountdownEnabled) {
+                    if ($scope.RemainingSeconds <= 0) {
+                        clearInterval(refreshId);
+                        completeRound();
+                    } else {
+                        $scope.RemainingSeconds = $scope.RemainingSeconds - 1;
+                        $scope.$apply();
+                    }
                 }
-                $scope.BlackCard = result.BlackCard;
-            }, function (error) {
-                console.log(error);
-            });
-        }, function (error) { console.log(error); });
+            }, 1000);
+        }
+
+        var startround = function () {
+            $scope.RoundOver = false;
+            apiservice.CreateRound(gameproperties.getGameId(), function(roundNumber) {
+                $scope.RoundNumber = roundNumber;
+                apiservice.GetHostRound($scope.GameId, function(result) {
+                    $scope.Players = {};
+                    for (var i = 0; i < result.Players.length; i++) {
+                        var player = result.Players[i];
+                        $scope.Players[player] = false;
+                    }
+                    $scope.BlackCard = result.BlackCard;
+                }, function(error) {
+                    console.log(error);
+                });
+                if ($scope.CountdownEnabled) {
+                    countdown();
+                }
+            }, function(error) { console.log(error); });
+        }
 
         signalrhubs.setOnPlayerSubmitted(function (playeraddedid) {
             $scope.Players[playeraddedid] = true;
+            allplayerssubmitted();
+            $scope.$apply();
         });
+
+        startround();
     });
 
     app.controller('RoundCtrl', function ($scope, gameproperties, apiservice, signalrservice, signalrhubs) {

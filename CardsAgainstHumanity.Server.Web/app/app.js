@@ -1,5 +1,5 @@
 ﻿(function() {
-    var app = angular.module("cah", ['ngRoute']);
+    var app = angular.module("cah", ['ngRoute', 'ui.bootstrap']);
 
     app.config(function ($routeProvider, $locationProvider) {
         $routeProvider
