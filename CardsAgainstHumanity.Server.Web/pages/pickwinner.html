@@ -1,19 +1,21 @@
-﻿<div>
-    <div class="card card-blk card-lg">
-        <h4>{{BlackCard.BlankValue}}</h4>
+﻿<div class="row">
+    <div class="col-md-3">
+        <div class="card card-blk card-lg">
+            <h4 class="margined">{{BlackCard.BlankValue}}</h4>
+        </div>
     </div>
-    <div>
-        <uib-accordion close-others="oneAtATime">
-            <uib-accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                This content is straight in the template.
-            </uib-accordion-group>
-            <uib-accordion-group heading="{{player}}" ng-repeat="player in players">
-                <div ng-repeat="card in player.cards">
-                    <div class="card card-lg">
-                        {{card}}
-                    </div>
-                </div>
-            </uib-accordion-group>
-        </uib-accordion>
+    <div class="col-md-3">
+        <div class="card card-wd card-clickable" ng-click="SelectSubmission(submission.PlayerId)" ng-mouseover="SelectSubmission(submission.PlayerId)" ng-repeat="submission in Submissions">
+            <h3 class="blk">{{submission.PlayerId}}</h3>
+            <button class="btn btn-primary centered" ng-click="PickRoundWinner(submission.PlayerId)">Winner</button>
+        </div>
     </div>
+    <div class="col-md-4" ng-show="ShowSelected">
+        <div class="card card-lg" ng-repeat="card in Selection.Cards">
+            <h3 class="blk">{{card.Value}}</h3>
+        </div>
+    </div>
+</div>
+<div ng-show="ShowSelected">
+    <h2>{{Selection.SubmittedAnswer}}</h2>
 </div>

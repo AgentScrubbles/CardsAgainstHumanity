@@ -61,7 +61,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PlayerSubmissionModel> Submissions(string gameId)
+        public SubmissionModel Submissions(string gameId)
         {
             var game = _gameService.GetGame(gameId);
             var blackCard = _cardService.GetBlackCard(game.CurrentRound.BlackCardId);
@@ -69,9 +69,22 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             var models = game.CurrentRound.PlayerSubmittedWhiteCards.Select(k => new PlayerSubmissionModel
             {
                 PlayerId = k.Key,
-                SubmittedAnswer = string.Format(blackCardModel.FormattableValue, k.Value.Select(j => _cardService.GetWhiteCard(j).Value).ToArray())
+                SubmittedAnswer = string.Format(blackCardModel.FormattableValue, k.Value.Select(j => _cardService.GetWhiteCard(j).Value).ToArray()),
+                Cards = k.Value.Select(j => _cardService.GetWhiteCard(j)).Select(j => new WhiteCardModel
+                {
+                    Value = j.Value,
+                    WhiteCardId = j.WhiteCardId
+                })
             });
-            return models;
+            return new SubmissionModel
+            {
+                BlackCard = new BlackCardModel
+                {
+                    BlackCardId = blackCard.BlackCardId,
+                    RawValue = blackCard.RawValue
+                },
+                Submissions = models
+            };
         }
 
         [HttpGet]
@@ -104,6 +117,14 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             var game = _gameService.GetGame(model.GameId);
             game.CurrentRound.SubmitCards(model.PlayerId, model.CardIds);
         }
-        
+
+        [HttpPost]
+        public void SubmitWinner([FromBody]PlayerModel model)
+        {
+            var game = _gameService.GetGame(model.GameId);
+            game.CurrentRound.SubmitWinner(model.PlayerId);
+        }
+
+
     }
 }

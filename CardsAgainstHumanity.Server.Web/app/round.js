@@ -23,6 +23,7 @@
             });
         }
 
+
         var countdown = function () {
             var refreshId = setInterval(function () {
                 if ($scope.CountdownEnabled) {

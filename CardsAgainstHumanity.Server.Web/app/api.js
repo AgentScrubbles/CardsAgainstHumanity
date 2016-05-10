@@ -34,6 +34,9 @@
             },
             CompleteRound: function(gameId, callback, errorfn) {
                 $http.get(baseUrl + 'Round/End?GameId=' + gameId).then(function(result) { callback(result.data) }, errorfn);
+            },
+            PickRoundWinner: function(gameId, playerId, callback, errorfn) {
+                $http.post(baseUrl + 'Round/SubmitWinner', { GameId: gameId, PlayerId: playerId }).then(function(result) { callback(result.data) }, errorfn);
             }
         }
     });

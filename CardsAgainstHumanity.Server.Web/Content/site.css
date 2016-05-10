@@ -2,6 +2,7 @@
   background: -webkit-linear-gradient(top, #4D4D4D 0, #4D4D4D 180px, #939393 400px);                
 }
 
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 h1 {
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -114,9 +115,21 @@ footer {
     height: 26em;
 }
 
+.card-wd {
+    width: 10em;
+    height: 5em;
+}
+.card-clickable {
+    cursor: pointer;
+}
+
 .card-huge {
     width: 20em;
     height: 35em;
+}
+
+.blk {
+    color: black;
 }
 
 .centered {
