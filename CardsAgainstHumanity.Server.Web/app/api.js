@@ -31,6 +31,9 @@
             },
             PlayersWhoSubmitted: function(gameId, callback, errorfn) {
                 $http.get(baseUrl + 'Round/PlayersWhoSubmitted?GameId=' + gameId).then(function(result) { callback(result.data), errorfn });
+            },
+            CompleteRound: function(gameId, callback, errorfn) {
+                $http.get(baseUrl + 'Round/End?GameId=' + gameId).then(function(result) { callback(result.data) }, errorfn);
             }
         }
     });

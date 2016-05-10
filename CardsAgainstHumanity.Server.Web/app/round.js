@@ -1,6 +1,6 @@
 ﻿(function () {
     var app = angular.module('cah');
-    app.controller('RoundHostCtrl', function ($scope, apiservice, gameproperties, signalrservice, signalrhubs) {
+    app.controller('RoundHostCtrl', function ($scope, $location, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.GameId = gameproperties.getGameId();
         $scope.CountdownEnabled = true;
         $scope.MaxTime = 30; //Thirty seconds max
@@ -18,7 +18,9 @@
         }
 
         var completeRound = function() {
-            
+            apiservice.CompleteRound(gameproperties.getGameId(), function() {
+                $location.path('/pickwinner');
+            });
         }
 
         var countdown = function () {
@@ -61,6 +63,7 @@
             $scope.$apply();
         });
 
+
         startround();
     });
 
@@ -69,6 +72,7 @@
         $scope.Items = [];
         $scope.Picks = [];
         $scope.HasSubmitted = false;
+        $scope.RoundOver = false;
         $scope.PlayersWhoSubmitted = [];
 
         $scope.GetPicks = function () {
@@ -175,6 +179,9 @@
         }, function (error) { });
         signalrhubs.setOnPlayerSubmitted(function (playeraddedid) {
             $scope.PlayersWhoSubmitted.push(playeraddedid);
+        });
+        signalrhubs.setOnRoundOver(function () {
+            $scope.RoundOver = true;
         });
     });
 })();

@@ -53,6 +53,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         public void ForceRoundOver()
         {
             _roundOpen = false;
+            _notificationService.RoundOver(GameId);
         }
 
         public void SubmitWinner(string playerId)

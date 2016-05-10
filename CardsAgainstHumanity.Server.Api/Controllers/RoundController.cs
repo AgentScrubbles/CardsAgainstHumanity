@@ -91,6 +91,13 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             return model;
         }
 
+        [HttpGet]
+        public void End(string gameId)
+        {
+            var game = _gameService.GetGame(gameId);
+            game.CurrentRound.ForceRoundOver();
+        }
+
         [HttpPost]
         public void Submit([FromBody]SubmitCardModel model)
         {

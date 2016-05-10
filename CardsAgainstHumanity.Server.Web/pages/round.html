@@ -7,20 +7,21 @@
         </div>
     </div>
     <div class="col-md-9">
-        <div ng-show="!HasSubmitted">
+        <div ng-show="!(HasSubmitted || RoundOver)">
             <h4>{{Readout}}</h4>
             <button class="btn btn-lg" ng-click="Submit()">Submit</button>
         </div>
-        <div ng-show="HasSubmitted">
+        <div ng-show="HasSubmitted || RoundOver">
             <h2>Submitted Players:</h2>
             <ul>
                 <li ng-repeat="player in PlayersWhoSubmitted">player</li>
             </ul>
+            <h2 ng-show="RoundOver">Waiting for host</h2>
         </div>
     </div>
 </div>
 
-<div ng-show="!HasSubmitted">
+<div ng-show="!(HasSubmitted || RoundOver)">
     <div class="centered">
         <a ng-click="scroll('prev')"><span class="glyphicon glyphicon-chevron-left"></span></a>
         <a ng-click="scroll('next')"><span class="glyphicon glyphicon- glyphicon-chevron-right"></span></a>
