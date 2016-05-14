@@ -10,6 +10,7 @@
           .when('/hostround', { templateUrl: '/pages/hostround.html', controller: 'RoundHostCtrl' })
           .when('/round', { templateUrl: '/pages/round.html', controller: 'RoundCtrl' })
           .when('/pickwinner', { templateUrl: '/pages/pickwinner.html', controller: 'PickWinnerCtrl' })
+          .when('/scoreboard', {templateUrl: '/pages/scoreboard.html', controller: 'scoreboardCtrl'})
           .when('/error', { templateUrl: '/pages/error.html' })
           .otherwise({ redirectTo: '/error' });
     });

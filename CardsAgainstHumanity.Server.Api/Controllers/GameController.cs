@@ -1,4 +1,5 @@
 ﻿using CardsAgainstHumanity.Server.Logic.Game;
+using CardsAgainstHumanity.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,20 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
         {
             var game = _gameService.GetGame(gameId);
             game.End();
+        }
+
+        [HttpGet]
+        public GameScoreModel Scores(string gameId)
+        {
+            var game = _gameService.GetGame(gameId);
+            return new GameScoreModel
+            {
+                Scores = game.GetScores().Select(k => new ScoreModel
+                {
+                    PlayerId = k.Key,
+                    Score = k.Value
+                }).ToList();
+            };
         }
     }
 }

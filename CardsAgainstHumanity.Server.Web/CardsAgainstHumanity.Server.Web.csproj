@@ -97,6 +97,7 @@
   <ItemGroup>
     <Content Include="app\pickwinner.js" />
     <Content Include="app\round.js" />
+    <Content Include="app\scoreboard.js" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="packages.config" />
     <Content Include="pages\hostround.html" />

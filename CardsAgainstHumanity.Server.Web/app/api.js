@@ -14,6 +14,9 @@
             EndGame: function(gameid, callback, errorfn){
                 $http.get(baseUrl + 'Game/EndGame?GameId=' + gameid).then(function (result) { callback(result.data); }, errorfn);
             },
+            GetScores: function(gameid, callback, error){
+                $http.get(baseUrl + 'Game/Scores?GameId=' + gameid).then(function (result) { callback(result.data); }, errorfn);
+            },
             GameReady: function (gameid, callback, errorfn) {
                 $http.get(baseUrl + 'Game/Start?GameId=' + gameid).then(function (result) { callback(result.data) }, errorfn);
             },
