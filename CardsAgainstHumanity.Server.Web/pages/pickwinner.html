@@ -3,6 +3,7 @@
         <div class="card card-blk card-lg">
             <h4 class="margined">{{BlackCard.BlankValue}}</h4>
         </div>
+        <button class="btn btn-danger btn-lg" ng-click="EndGame()">End Game</button>
     </div>
     <div class="col-md-3">
         <div class="card card-wd card-clickable" ng-click="SelectSubmission(submission.PlayerId)" ng-mouseover="SelectSubmission(submission.PlayerId)" ng-repeat="submission in Submissions">

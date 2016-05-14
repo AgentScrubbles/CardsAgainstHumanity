@@ -6,5 +6,6 @@
         void GameReady(string gameId);
         void PlayerSubmitted(string playerId, string gameId);
         void RoundOver(string gameId);
+        void GameEnded(string gameId);
     }
 }

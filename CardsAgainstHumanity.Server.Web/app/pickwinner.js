@@ -21,6 +21,13 @@
             }
         }
 
+        $scope.EndGame = function () {
+            apiservice.EndGame(gameproperties.getGameId(), function () {
+                $location.path('/scoreboard');
+            }, function (error) {
+            });
+        }
+
         $scope.SelectSubmission = function(playerId) {
             $scope.Selection = find(playerId);
             $scope.ShowSelected = true;

@@ -51,5 +51,11 @@ namespace CardsAgainstHumanity.Server.Api.Hubs
             var group = Clients.Group(gameId);
             group?.roundOver();
         }
+
+        public void GameEnded(string gameId)
+        {
+            var group = Clients.Group(gameId);
+            group?.gameEnded();
+        }
     }
 }

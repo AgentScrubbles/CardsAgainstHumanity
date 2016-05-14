@@ -103,6 +103,7 @@
     <Content Include="pages\loading.html" />
     <Content Include="pages\pickwinner.html" />
     <Content Include="pages\round.html" />
+    <Content Include="pages\scoreboard.html" />
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-animate.min.js" />
     <Content Include="scripts\angular-touch.js" />

@@ -11,6 +11,9 @@
             JoinGame: function (gameid, playerid, callback, errorfn) {
                 $http.post(baseUrl + 'Match/JoinGame', { GameId: gameid, PlayerId: playerid }).then(function (result) { callback(result.data) }, errorfn);
             },
+            EndGame: function(gameid, callback, errorfn){
+                $http.get(baseUrl + 'Game/EndGame?GameId=' + gameid).then(function (result) { callback(result.data); }, errorfn);
+            },
             GameReady: function (gameid, callback, errorfn) {
                 $http.get(baseUrl + 'Game/Start?GameId=' + gameid).then(function (result) { callback(result.data) }, errorfn);
             },

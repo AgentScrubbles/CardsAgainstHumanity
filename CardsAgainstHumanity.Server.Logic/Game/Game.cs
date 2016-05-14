@@ -27,6 +27,8 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         public IList<Guid> AvailableWhiteCards { get; private set; } 
         public IList<Guid> AvailableBlackCards { get; private set; }
         public bool IsRunning { get; private set; }
+
+
         public List<string> Players { get; private set; }
         public IDictionary<string, Hand> Hands { get; private set; }
 
@@ -131,6 +133,13 @@ namespace CardsAgainstHumanity.Server.Logic.Game
             var cards = cardIds.ToList();
             CurrentRound.SubmitCards(playerId, cards);
             cards.ForEach(k => Hands.Get(playerId).CardsInHand.Remove(k));
+        }
+
+
+        public void End()
+        {
+            IsRunning = false;
+            _notificationFactory.GetInstance().GameEnded(GameId);
         }
     }
 }

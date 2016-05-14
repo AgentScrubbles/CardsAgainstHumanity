@@ -23,6 +23,9 @@
             playerHub.client.roundOver = function() {
                 signalrhubs.OnRoundOver();
             }
+            playerHub.client.gameEnded = function () {
+                signalrhubs.OnGameOver();
+            }
                 
             // Turn logging on so we can see the calls in the browser console
             $.connection.logging = true;
@@ -41,6 +44,9 @@
                 }
                 playerHub.client.roundOver = function () {
                     signalrhubs.OnRoundOver();
+                }
+                playerHub.client.gameEnded = function () {
+                    signalrhubs.OnGameOver();
                 }
                 done();
             });
@@ -68,6 +74,7 @@
         var gameReadyFn;
         var playerSubmittedFn;
         var roundOverFn;
+        var gameEndedFn;
 
         return {
             OnPlayerAdded(data) {
@@ -93,6 +100,12 @@
             },
             setOnRoundOver(callback) {
                 roundOverFn = callback;
+            },
+            OnGameOver() {
+                gameEndedFn();
+            },
+            setOnGameover(callback) {
+                gameEndedFn = callback;
             }
         }
     });

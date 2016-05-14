@@ -32,5 +32,12 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             var game = _gameService.GetGame(gameId);
             return game.Players;
         }
+
+        [HttpGet]
+        public void EndGame(string gameId)
+        {
+            var game = _gameService.GetGame(gameId);
+            game.End();
+        }
     }
 }
