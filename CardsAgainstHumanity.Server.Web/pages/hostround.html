@@ -36,7 +36,9 @@
     </div>
 </div>
 <div>
-    <input type="text" class="form-control" ng-model="MaxTime" ng-change="ChangeMaxTime()"/>
-
-    <uib-progressbar class="progress-striped active" max="RoundTime" value="RemainingSeconds" type="success"><i>{{RemainingSeconds}} seconds</i></uib-progressbar>
+    <div class="form-group">
+        <label>Countdown Timer</label>
+        <input type="text" class="form-control margined" ng-model="MaxTime" ng-change="ChangeMaxTime()" />
+    </div>
+    <uib-progressbar class="progress-striped active" max="MaxTime" value="RemainingSeconds" type="{{PBType}}"><i>{{RemainingSeconds}} seconds</i></uib-progressbar>
 </div>

@@ -3,6 +3,7 @@
     app.controller('RoundHostCtrl', function ($scope, $location, apiservice, gameproperties, signalrservice, signalrhubs) {
         $scope.GameId = gameproperties.getGameId();
         $scope.CountdownEnabled = true;
+        $scope.RoundOver = false;
         $scope.MaxTime = parseInt(gameproperties.getMaxTime());
         $scope.RemainingSeconds = $scope.MaxTime;
 
@@ -21,7 +22,7 @@
             gameproperties.setMaxTime($scope.MaxTime);
         }
 
-        var completeRound = function() {
+        $scope.completeRound = function() {
             apiservice.CompleteRound(gameproperties.getGameId(), function() {
                 $location.path('/pickwinner');
             });
@@ -33,9 +34,18 @@
                 if ($scope.CountdownEnabled) {
                     if ($scope.RemainingSeconds <= 0) {
                         clearInterval(refreshId);
-                        completeRound();
+                        $scope.completeRound();
                     } else {
                         $scope.RemainingSeconds = $scope.RemainingSeconds - 1;
+                        var percent = $scope.RemainingSeconds / $scope.MaxTime;
+                        if (percent > 0.5) {
+                            $scope.PBType = 'success';
+                        } else if (percent > 0.15) {
+                            $scope.PBType = 'warning';
+                        } else {
+                            $scope.PBType = 'danger';
+                        }
+                        
                         $scope.$apply();
                     }
                 }
@@ -179,8 +189,11 @@
         signalrhubs.setOnPlayerSubmitted(function (playeraddedid) {
             $scope.PlayersWhoSubmitted.push(playeraddedid);
         });
-        signalrhubs.setOnRoundOver(function () {
-            $scope.RoundOver = true;
+        signalrservice.Initialize(function () {
+            signalrhubs.setOnRoundOver(function () {
+                console.log('Round is over');
+                $scope.RoundOver = true;
+            });
         });
     });
 })();

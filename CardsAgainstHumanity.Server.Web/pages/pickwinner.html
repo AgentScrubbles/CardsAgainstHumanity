@@ -6,13 +6,13 @@
     </div>
     <div class="col-md-3">
         <div class="card card-wd card-clickable" ng-click="SelectSubmission(submission.PlayerId)" ng-mouseover="SelectSubmission(submission.PlayerId)" ng-repeat="submission in Submissions">
-            <h3 class="blk">{{submission.PlayerId}}</h3>
+            <h1 class="blk">{{submission.PlayerId}}</h1>
             <button class="btn btn-primary centered" ng-click="PickRoundWinner(submission.PlayerId)">Winner</button>
         </div>
     </div>
     <div class="col-md-4" ng-show="ShowSelected">
         <div class="card card-lg" ng-repeat="card in Selection.Cards">
-            <h3 class="blk">{{card.Value}}</h3>
+            <h1 class="blk">{{card.Value}}</h1>
         </div>
     </div>
 </div>
