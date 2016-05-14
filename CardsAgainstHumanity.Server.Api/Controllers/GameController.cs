@@ -51,7 +51,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
                 {
                     PlayerId = k.Key,
                     Score = k.Value
-                }).ToList();
+                }).ToList()
             };
         }
     }
