@@ -87,7 +87,7 @@ namespace CardsAgainstHumanity.Server.Logic.Game
 
         public IDictionary<string, int> GetScores()
         {
-            return Rounds.GroupBy(k => k.Winner).ToDictionary(k => k.Key, v => v.Count());
+            return Rounds.Where(k => k.Winner != null).GroupBy(k => k.Winner).ToDictionary(k => k.Key, v => v.Count());
         } 
 
         private void Deal()
