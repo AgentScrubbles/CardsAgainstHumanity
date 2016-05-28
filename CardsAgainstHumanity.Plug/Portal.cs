@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
@@ -19,7 +20,7 @@ namespace CardsAgainstHumanity.Plug
         }
         
 
-        public async Task<T> Get<T>(string uri)
+        public async Task<T> Get<T>(string uri, dynamic model = null)
         {
             using (var client = new HttpClient())
             {
@@ -27,13 +28,21 @@ namespace CardsAgainstHumanity.Plug
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                var builder = new UriBuilder(BaseUri + uri);
+                var query = HttpUtility.ParseQueryString(builder);
+                foreach (var param in JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(model))
+                {
+                    builder[param.Key] = param.Value;
+                }
+
+
                 // New code:
                 HttpResponseMessage response = await client.GetAsync(uri);
                 return await ValidateOrThrow<T>(response);
             }
         }
 
-        public async Task<S> Post<T, S>(string uri, T model)
+        public async Task<S> Post<S>(string uri, dynamic model)
         {
             using (var client = new HttpClient())
             {

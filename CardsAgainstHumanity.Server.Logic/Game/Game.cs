@@ -39,11 +39,11 @@ namespace CardsAgainstHumanity.Server.Logic.Game
         }
 
         public List<Round> Rounds { get; private set; } 
-        public Round CurrentRound { get { return Rounds[Rounds.Count - 1]; } } 
+        public Round CurrentRound => Rounds[Rounds.Count - 1];
 
         public async Task Setup()
         {
-            AvailableWhiteCards = (await _cardService.GetAllWhiteCards()).Select(k => k.Key).Shuffle().ToList();
+            AvailableWhiteCards = (await _cardService.GetAllWhiteCards(GameId)).Select(k => k.Key).Shuffle().ToList();
             AvailableBlackCards = (await _cardService.GetAllBlackCards()).Select(k => k.Key).Shuffle().ToList();
             Rounds = new List<Round>();
             Players = new List<string>();

@@ -44,7 +44,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
                     BlackCardId = blackCard.BlackCardId,
                     RawValue = blackCard.RawValue
                 },
-                WhiteCards = game.Hands[playerId].CardsInHand.Select(k => _cardService.GetWhiteCard(k)).Select(k => new WhiteCardModel
+                WhiteCards = game.Hands[playerId].CardsInHand.Select(k => _cardService.GetWhiteCard(gameId, k)).Select(k => new WhiteCardModel
                 {
                     WhiteCardId = k.WhiteCardId,
                     Value = k.Value
@@ -69,8 +69,8 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             var models = game.CurrentRound.PlayerSubmittedWhiteCards.Select(k => new PlayerSubmissionModel
             {
                 PlayerId = k.Key,
-                SubmittedAnswer = string.Format(blackCardModel.FormattableValue, k.Value.Select(j => _cardService.GetWhiteCard(j).Value).ToArray()),
-                Cards = k.Value.Select(j => _cardService.GetWhiteCard(j)).Select(j => new WhiteCardModel
+                SubmittedAnswer = string.Format(blackCardModel.FormattableValue, k.Value.Select(j => _cardService.GetWhiteCard(gameId, j).Value).ToArray()),
+                Cards = k.Value.Select(j => _cardService.GetWhiteCard(gameId, j)).Select(j => new WhiteCardModel
                 {
                     Value = j.Value,
                     WhiteCardId = j.WhiteCardId

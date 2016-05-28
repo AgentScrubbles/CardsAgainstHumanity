@@ -36,7 +36,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
             var cards = new List<WhiteCard>();
             hand.CardsInHand.AsParallel().ForAll(k =>
             {
-                cards.Add(_cardService.GetWhiteCard(k));
+                cards.Add(_cardService.GetWhiteCard(gameId, k));
             });
             return cards;
         }
