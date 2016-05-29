@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Threading.Tasks;
 using CardsAgainstHumanity.Shared.Exceptions;
 using Newtonsoft.Json;
@@ -28,18 +30,35 @@ namespace CardsAgainstHumanity.Plug
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var builder = new UriBuilder(BaseUri + uri);
-                var query = HttpUtility.ParseQueryString(builder);
-                foreach (var param in JsonConvert.DeserializeObject<IDictionary<string, dynamic>>(model))
-                {
-                    builder[param.Key] = param.Value;
-                }
 
+                var paramUri = model == null ? uri : GetQueryString(uri, model);
 
                 // New code:
-                HttpResponseMessage response = await client.GetAsync(uri);
+                HttpResponseMessage response = await client.GetAsync(paramUri);
                 return await ValidateOrThrow<T>(response);
             }
+        }
+
+        private string GetQueryString(string uri, dynamic model)
+        {
+            var dict = (IDictionary<string, object>) model;
+            if (dict == null || !dict.Any()) return uri;
+            var sb = new StringBuilder(uri);
+            var first = true;
+            foreach (var param in dict)
+            {
+                if (first)
+                {
+                    sb.Append("?");
+                    first = false;
+                }
+                else
+                {
+                    sb.Append("&");
+                }
+                sb.Append(param.Key + "=" + param.Value);
+            }
+            return sb.ToString();
         }
 
         public async Task<S> Post<S>(string uri, dynamic model)
