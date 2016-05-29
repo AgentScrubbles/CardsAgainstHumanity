@@ -8,6 +8,7 @@ namespace CardsAgainstHumanity.Plug
         private const string UrlGetGame = "Match/CreateGame";
         private const string UrlJoinGame = "Match/JoinGame";
         private const string UrlLeaveGame = "Match/LeaveGame";
+        
 
         public Task<string> CreateGame()
         {
@@ -21,7 +22,7 @@ namespace CardsAgainstHumanity.Plug
 
         public Task<bool> LeaveGame(string gameId, string playerId)
         {
-            return Portal.Instance.Get<bool>(UrlLeaveGame, new)
+            return Portal.Instance.Get<bool>(UrlLeaveGame, new {GameId = gameId, PlayerId = playerId});
         }
     }
 }

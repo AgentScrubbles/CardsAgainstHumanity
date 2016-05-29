@@ -16,12 +16,14 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public string CreateGame()
         {
             return _gameService.CreateGame();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public bool JoinGame([FromBody]JoinGameModel model)
         {
             var game = _gameService.GetGame(model.GameId);
@@ -36,6 +38,7 @@ namespace CardsAgainstHumanity.Server.Api.Controllers
     }
 
         [HttpGet]
+        [AllowAnonymous]
         public bool LeaveGame(string playerId, string gameId)
         {
             var game = _gameService.GetGame(gameId);

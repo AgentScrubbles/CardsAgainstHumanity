@@ -12,11 +12,10 @@ namespace CardsAgainstHumanity.Shared.Extensions
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TValue> valueSelector)
         {
             var dict = new ConcurrentDictionary<TKey, TValue>();
-            source.Select(k => new {key = keySelector.Invoke(k), value = valueSelector.Invoke(k)}).AsParallel().ForAll(
-                k =>
-                {
-                    dict[k.key] = k.value;
-                });
+            foreach(var k in source.Select(k => new {key = keySelector.Invoke(k), value = valueSelector.Invoke(k) }))
+            {
+                dict[k.key] = k.value;
+            }
             return dict;
         }
 

@@ -14,7 +14,7 @@ namespace CardsAgainstHumanity.Plug
     public class Portal
     {
         public static Portal Instance => _instance ?? (_instance = new Portal());
-        public static string BaseUri { get; set; }
+        public static string BaseUri => "http://localhost:63118/api/";
         private static Portal _instance;
         private Portal()
         {
@@ -30,11 +30,11 @@ namespace CardsAgainstHumanity.Plug
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-
+                
                 var paramUri = model == null ? uri : GetQueryString(uri, model);
 
                 // New code:
-                HttpResponseMessage response = await client.GetAsync(paramUri);
+                var response = await client.GetAsync(paramUri);
                 return await ValidateOrThrow<T>(response);
             }
         }
