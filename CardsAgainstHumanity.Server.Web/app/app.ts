@@ -1,15 +1,16 @@
-/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="./gamemodule.ts"/>
 /// <reference path="./signalr.ts"/>
 /// <reference path="./settings.ts"/>
 /// <reference path="./gameservice.ts"/>
 /// <reference path="./mainCtrl.ts"/>
 /// <reference path="./loadingCtrl.ts"/>
-var App;
-(function (App) {
+
+module App {
     'use strict';
-    var app = App.CAH.Module; //Allow other places to reach this
-    app.config(function ($routeProvider, $locationProvider) {
+   
+    var app = CAH.Module; //Allow other places to reach this
+    app.config(function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', { templateUrl: '/pages/main.html', controller: 'MainCtrl' })
             .when('/joingame', { templateUrl: '/pages/JoinGame.html', controller: 'JoinCtrl' })
@@ -22,4 +23,5 @@ var App;
             .when('/error', { templateUrl: '/pages/error.html' })
             .otherwise({ redirectTo: '/error' });
     });
-})(App || (App = {}));
+    
+}

@@ -1,112 +1,136 @@
-﻿(function() {
-    var app = angular.module("cah");
-
-    app.factory("signalrservice", function ($http, gameproperties, signalrhubs) {
-        var baseUrl = "http://localhost:63118/";
-
-        var init = function(done){
-            
-            //jQuery.support.cors = true;
-            $.connection.hub.url = baseUrl + "signalr";
-            console.log('Initializing SignalR at URL ' + $.connection.hub.url);
-            var playerHub = $.connection.player;
+/// <reference path="../scripts/typings/jquery/jquery.d.ts" />
+var App;
+(function (App) {
+    var SignalRService = (function () {
+        function SignalRService(settings, gameproperties, signalrhubs) {
+            this.gameproperties = gameproperties;
+            this.signalrhubs = signalrhubs;
+            this.baseUrl = settings.BaseSignalRUrl;
+            return this;
+        }
+        SignalRService.prototype.init = function (done) {
+            var me = this;
+            var j = $;
+            var conn = j.connection;
+            conn.hub.url = this.baseUrl + "signalr";
+            console.log('Initializing SignalR at URL ' + conn.hub.url);
+            var playerHub = conn.player;
             playerHub.client.playerAdded = function (message) {
-                signalrhubs.OnPlayerAdded(message);
-            }
+                me.signalrhubs.PlayerAddedFn(message);
+            };
             playerHub.client.gameReady = function (message) {
                 console.log('game ready was called');
-                signalrhubs.OnGameReady(message);
-            }
+                me.signalrhubs.GameReadyFn(message);
+            };
             playerHub.client.playerSubmitted = function (message) {
-                signalrhubs.OnPlayerSubmitted(message);
-            }
-            playerHub.client.roundOver = function() {
-                signalrhubs.OnRoundOver();
-            }
+                me.signalrhubs.PlayerSubmittedFn(message);
+            };
+            playerHub.client.roundOver = function () {
+                me.signalrhubs.RoundOverFn();
+            };
             playerHub.client.gameEnded = function () {
-                signalrhubs.OnGameOver();
-            }
-                
+                me.signalrhubs.GameEndedFn();
+            };
             // Turn logging on so we can see the calls in the browser console
-            $.connection.logging = true;
-            console.log('Initializing signalr with url ' + $.connection.hub.url);
-            $.connection.hub.start({ jsonp: true }).done(function () {
-                console.log('Subscribing with gameId ' + gameproperties.getGameId());
-                playerHub.server.subscribe(gameproperties.getGameId());
+            conn.logging = true;
+            console.log('Initializing signalr with url ' + conn.hub.url);
+            conn.hub.start({ jsonp: true })
+                .done(function () {
+                console.log('Subscribing with gameId ' + me.gameproperties.getGameId());
+                playerHub.server.subscribe(me.gameproperties.getGameId());
                 playerHub.client.playerAdded = function (playerName) {
-                }
+                };
                 playerHub.client.gameReady = function (message) {
                     console.log('made it here for some reason');
-                    signalrhubs.OnGameReady(message);
-                }
+                    me.signalrhubs.GameReadyFn(message);
+                };
                 playerHub.client.playerSubmitted = function (player) {
-                    signalrhubs.OnPlayerSubmitted(player);
-                }
+                    me.signalrhubs.PlayerSubmittedFn(player);
+                };
                 playerHub.client.roundOver = function () {
-                    signalrhubs.OnRoundOver();
-                }
+                    me.signalrhubs.RoundOverFn();
+                };
                 playerHub.client.gameEnded = function () {
-                    signalrhubs.OnGameOver();
-                }
+                    me.signalrhubs.GameEndedFn();
+                };
                 done();
             });
+        };
+        SignalRService.prototype.Initialize = function (done) {
+            var scriptUrl = this.baseUrl + '/signalr/hubs';
+            var me = this;
+            $.ajax({
+                url: scriptUrl,
+                dataType: 'script',
+                success: function () {
+                    me.init(done);
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+                async: true
+            });
+        };
+        return SignalRService;
+    }());
+    App.SignalRService = SignalRService;
+    App.CAH.Module.factory("signalrservice", SignalRService);
+    var SignalRHubs = (function () {
+        function SignalRHubs() {
+            return this;
         }
-
-
-        var playerHub;
-        return {
-            Initialize: function (done) {
-                var scriptUrl = baseUrl + '/signalr/hubs';
-                    $.ajax({
-                        url: scriptUrl,
-                        dataType: 'script',
-                        success: function () { init(done); },
-                        error: function(error) { console.log(error);},
-                        async: true
-                    });
-
-            }
-        }
-    });
-
-    app.factory("signalrhubs", function() {
-        var playerAddedFn;
-        var gameReadyFn;
-        var playerSubmittedFn;
-        var roundOverFn;
-        var gameEndedFn;
-
-        return {
-            OnPlayerAdded(data) {
-                playerAddedFn(data);
+        Object.defineProperty(SignalRHubs.prototype, "PlayerAddedFn", {
+            get: function () {
+                return this._playerAddedFn;
             },
-            setOnPlayerAdded(callback) {
-                playerAddedFn = callback;
+            set: function (value) {
+                this._playerAddedFn = value;
             },
-            OnGameReady(data) {
-                gameReadyFn(data);
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(SignalRHubs.prototype, "GameReadyFn", {
+            get: function () {
+                return this._gameReadyFn;
             },
-            setOnGameReady(callback) {
-                gameReadyFn = callback;
+            set: function (value) {
+                this._gameReadyFn = value;
             },
-            OnPlayerSubmitted(data) {
-                playerSubmittedFn(data);
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(SignalRHubs.prototype, "PlayerSubmittedFn", {
+            get: function () {
+                return this._playerSubmittedFn;
             },
-            setOnPlayerSubmitted(callback) {
-                playerSubmittedFn = callback;
+            set: function (value) {
+                this._playerSubmittedFn = value;
             },
-            OnRoundOver() {
-                roundOverFn();
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(SignalRHubs.prototype, "RoundOverFn", {
+            get: function () {
+                return this._roundOverFn;
             },
-            setOnRoundOver(callback) {
-                roundOverFn = callback;
+            set: function (value) {
+                this._roundOverFn = value;
             },
-            OnGameOver() {
-                gameEndedFn();
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(SignalRHubs.prototype, "GameEndedFn", {
+            get: function () {
+                return this._gameEndedFn;
             },
-            setOnGameover(callback) {
-                gameEndedFn = callback;
-            }
-        }
-    });
-})();
+            set: function (value) {
+                this._gameEndedFn = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return SignalRHubs;
+    }());
+    App.SignalRHubs = SignalRHubs;
+    App.CAH.Module.factory("signalrhubs", SignalRHubs);
+})(App || (App = {}));

@@ -1,50 +1,53 @@
-﻿(function() {
-    var app = angular.module("cah");
-
-    app.factory("apiservice", function ($http) {
-
-        var baseUrl = "http://localhost:63118/api/";
-        return {
-            CreateGame: function (callback, errorFn) {
-                $http.get(baseUrl + "Match/CreateGame").then(function (result){callback(result.data)}, errorFn);
-            },
-            JoinGame: function (gameid, playerid, callback, errorfn) {
-                $http.post(baseUrl + 'Match/JoinGame', { GameId: gameid, PlayerId: playerid }).then(function (result) { callback(result.data) }, errorfn);
-            },
-            EndGame: function(gameid, callback, errorfn){
-                $http.get(baseUrl + 'Game/EndGame?GameId=' + gameid).then(function (result) { callback(result.data); }, errorfn);
-            },
-            GetScores: function(gameid, callback, error){
-                $http.get(baseUrl + 'Game/Scores?GameId=' + gameid).then(function (result) { callback(result.data); }, error);
-            },
-            GameReady: function (gameid, callback, errorfn) {
-                $http.get(baseUrl + 'Game/Start?GameId=' + gameid).then(function (result) { callback(result.data) }, errorfn);
-            },
-            CreateRound: function (gameid, callback, errorfn) {
-                $http.get(baseUrl + 'Round/Create?GameId=' + gameid).then(function (result) { callback(result.data) }, errorfn);
-            },
-            GetPlayerRound: function (gameid, playerid, callback, errorfn) {
-                $http.get(baseUrl + 'Round/GetPlayerRound?GameId=' + gameid + '&PlayerId=' + playerid).then(function (result) { callback(result.data) }, errorfn);
-            },
-            GetHostRound: function (gameid, callback, errorfn) {
-                $http.get(baseUrl + 'Round/GetHostRound?GameId=' + gameid).then(function (result) { callback(result.data) }, errorfn);
-            },
-            SubmitCard: function (gameid, playerid, cardids, callback, errorfn) {
-                $http.post(baseUrl + 'Round/Submit', { GameId: gameid, PlayerId: playerid, CardIds: cardids }).then(function (result) { callback(result.data) }, errorfn);
-            },
-            GetSubmissions: function (gameid, callback, errorfn) {
-                $http.get(baseUrl + 'Round/Submissions?GameId=' + gameid).then(function (result) { callback(result.data), errorfn });
-            },
-            PlayersWhoSubmitted: function(gameId, callback, errorfn) {
-                $http.get(baseUrl + 'Round/PlayersWhoSubmitted?GameId=' + gameId).then(function(result) { callback(result.data), errorfn });
-            },
-            CompleteRound: function(gameId, callback, errorfn) {
-                $http.get(baseUrl + 'Round/End?GameId=' + gameId).then(function(result) { callback(result.data) }, errorfn);
-            },
-            PickRoundWinner: function(gameId, playerId, callback, errorfn) {
-                $http.post(baseUrl + 'Round/SubmitWinner', { GameId: gameId, PlayerId: playerId }).then(function(result) { callback(result.data) }, errorfn);
-            }
+/// <reference path="./models/ScoreModel.ts"/>
+var App;
+(function (App) {
+    var ApiService = (function () {
+        function ApiService($http, settings) {
+            this.$http = $http;
+            this.baseUrl = settings.BaseApiUrl;
+            return this;
         }
-    });
-
-})();
+        ApiService.prototype.CreateGame = function () {
+            return this.$http.get(this.baseUrl + "Match/CreateGame");
+        };
+        ApiService.prototype.JoinGame = function (gameid, playerid) {
+            return this.$http.post(this.baseUrl + 'Match/JoinGame', { GameId: gameid, PlayerId: playerid });
+        };
+        ApiService.prototype.EndGame = function (gameid) {
+            return this.$http.get(this.baseUrl + 'Game/EndGame?GameId=' + gameid);
+        };
+        ApiService.prototype.GetScores = function (gameid) {
+            return this.$http.get(this.baseUrl + 'Game/Scores?GameId=' + gameid);
+        };
+        ApiService.prototype.GameReady = function (gameid) {
+            return this.$http.get(this.baseUrl + 'Game/Start?GameId=' + gameid);
+        };
+        ApiService.prototype.CreateRound = function (gameid) {
+            return this.$http.get(this.baseUrl + 'Round/Create?GameId=' + gameid);
+        };
+        ApiService.prototype.GetPlayerRound = function (gameid, playerid) {
+            return this.$http.get(this.baseUrl + 'Round/GetPlayerRound?GameId=' + gameid + '&PlayerId=' + playerid);
+        };
+        ApiService.prototype.GetHostRound = function (gameid) {
+            return this.$http.get(this.baseUrl + 'Round/GetHostRound?GameId=' + gameid);
+        };
+        ApiService.prototype.SubmitCard = function (gameid, playerid, cardids) {
+            return this.$http.post(this.baseUrl + 'Round/Submit', { GameId: gameid, PlayerId: playerid, CardIds: cardids });
+        };
+        ApiService.prototype.GetSubmissions = function (gameid) {
+            return this.$http.get(this.baseUrl + 'Round/Submissions?GameId=' + gameid);
+        };
+        ApiService.prototype.PlayersWhoSubmitted = function (gameid) {
+            return this.$http.get(this.baseUrl + 'Round/PlayersWhoSubmitted?GameId=' + gameid);
+        };
+        ApiService.prototype.CompleteRound = function (gameid) {
+            return this.$http.get(this.baseUrl + 'Round/End?GameId=' + gameid);
+        };
+        ApiService.prototype.PickRoundWinner = function (gameid, playerid) {
+            return this.$http.post(this.baseUrl + 'Round/SubmitWinner', { GameId: gameid, PlayerId: playerid });
+        };
+        return ApiService;
+    }());
+    App.ApiService = ApiService;
+    App.CAH.Module.factory("apiservice", ApiService);
+})(App || (App = {}));
