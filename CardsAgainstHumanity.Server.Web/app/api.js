@@ -8,46 +8,61 @@ var App;
             return this;
         }
         ApiService.prototype.CreateGame = function () {
-            return this.$http.get(this.baseUrl + "Match/CreateGame");
+            var p = this.$http.get(this.baseUrl + "Match/CreateGame");
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.JoinGame = function (gameid, playerid) {
-            return this.$http.post(this.baseUrl + 'Match/JoinGame', { GameId: gameid, PlayerId: playerid });
+            var p = this.$http.post(this.baseUrl + 'Match/JoinGame', { GameId: gameid, PlayerId: playerid });
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.EndGame = function (gameid) {
-            return this.$http.get(this.baseUrl + 'Game/EndGame?GameId=' + gameid);
+            var p = this.$http.get(this.baseUrl + 'Game/EndGame?GameId=' + gameid);
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.GetScores = function (gameid) {
-            return this.$http.get(this.baseUrl + 'Game/Scores?GameId=' + gameid);
+            var p = this.$http.get(this.baseUrl + 'Game/Scores?GameId=' + gameid);
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.GameReady = function (gameid) {
-            return this.$http.get(this.baseUrl + 'Game/Start?GameId=' + gameid);
+            var p = this.$http.get(this.baseUrl + 'Game/Start?GameId=' + gameid);
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.CreateRound = function (gameid) {
-            return this.$http.get(this.baseUrl + 'Round/Create?GameId=' + gameid);
+            var p = this.$http.get(this.baseUrl + 'Round/Create?GameId=' + gameid);
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.GetPlayerRound = function (gameid, playerid) {
-            return this.$http.get(this.baseUrl + 'Round/GetPlayerRound?GameId=' + gameid + '&PlayerId=' + playerid);
+            var p = this.$http.get(this.baseUrl + 'Round/GetPlayerRound?GameId=' + gameid + '&PlayerId=' + playerid);
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.GetHostRound = function (gameid) {
-            return this.$http.get(this.baseUrl + 'Round/GetHostRound?GameId=' + gameid);
+            var p = this.$http.get(this.baseUrl + 'Round/GetHostRound?GameId=' + gameid);
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.SubmitCard = function (gameid, playerid, cardids) {
-            return this.$http.post(this.baseUrl + 'Round/Submit', { GameId: gameid, PlayerId: playerid, CardIds: cardids });
+            var p = this.$http.post(this.baseUrl + 'Round/Submit', { GameId: gameid, PlayerId: playerid, CardIds: cardids });
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.GetSubmissions = function (gameid) {
-            return this.$http.get(this.baseUrl + 'Round/Submissions?GameId=' + gameid);
+            var p = this.$http.get(this.baseUrl + 'Round/Submissions?GameId=' + gameid);
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.PlayersWhoSubmitted = function (gameid) {
-            return this.$http.get(this.baseUrl + 'Round/PlayersWhoSubmitted?GameId=' + gameid);
+            var p = this.$http.get(this.baseUrl + 'Round/PlayersWhoSubmitted?GameId=' + gameid);
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.CompleteRound = function (gameid) {
-            return this.$http.get(this.baseUrl + 'Round/End?GameId=' + gameid);
+            var p = this.$http.get(this.baseUrl + 'Round/End?GameId=' + gameid);
+            return new App.Utilities.ParsedPromise(p);
         };
         ApiService.prototype.PickRoundWinner = function (gameid, playerid) {
-            return this.$http.post(this.baseUrl + 'Round/SubmitWinner', { GameId: gameid, PlayerId: playerid });
+            var p = this.$http.post(this.baseUrl + 'Round/SubmitWinner', { GameId: gameid, PlayerId: playerid });
+            return new App.Utilities.ParsedPromise(p);
         };
+        ApiService.$inject = ['$http', 'settings'];
         return ApiService;
     }());
     App.ApiService = ApiService;
-    App.CAH.Module.factory("apiservice", ApiService);
+    App.CAH.Module.factory("apiservice", function ($http, settings) { return new ApiService($http, settings); });
 })(App || (App = {}));
+//# sourceMappingURL=api.js.map

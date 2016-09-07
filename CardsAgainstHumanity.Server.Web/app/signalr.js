@@ -74,7 +74,7 @@ var App;
         return SignalRService;
     }());
     App.SignalRService = SignalRService;
-    App.CAH.Module.factory("signalrservice", SignalRService);
+    App.CAH.Module.factory("signalrservice", function (settings, gameproperties, signalrhubs) { return new SignalRService(settings, gameproperties, signalrhubs); });
     var SignalRHubs = (function () {
         function SignalRHubs() {
             return this;
@@ -132,5 +132,6 @@ var App;
         return SignalRHubs;
     }());
     App.SignalRHubs = SignalRHubs;
-    App.CAH.Module.factory("signalrhubs", SignalRHubs);
+    App.CAH.Module.factory("signalrhubs", function () { return new SignalRHubs(); });
 })(App || (App = {}));
+//# sourceMappingURL=signalr.js.map

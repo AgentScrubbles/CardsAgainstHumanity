@@ -66,3 +66,4 @@ var App;
         Models.PlayerSubmissionModel = PlayerSubmissionModel;
     })(Models = App.Models || (App.Models = {}));
 })(App || (App = {}));
+//# sourceMappingURL=SubmissionModels.js.map

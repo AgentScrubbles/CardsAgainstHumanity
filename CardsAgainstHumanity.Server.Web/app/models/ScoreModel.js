@@ -46,3 +46,4 @@ var App;
         Models.ScoreModel = ScoreModel;
     })(Models = App.Models || (App.Models = {}));
 })(App || (App = {}));
+//# sourceMappingURL=ScoreModel.js.map

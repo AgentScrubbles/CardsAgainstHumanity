@@ -15,3 +15,4 @@ var App;
     App.LoadingCtrl = LoadingCtrl;
     App.CAH.Module.controller('LoadingCtrl', LoadingCtrl);
 })(App || (App = {}));
+//# sourceMappingURL=loadingCtrl.js.map

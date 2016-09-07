@@ -3,84 +3,100 @@
 module App {
 
     export interface IApiService {
-        CreateGame() : ng.IPromise<string>;
-        JoinGame(gameid: string, playerid: string) : ng.IPromise<boolean>;
-        EndGame(gameid: string) : ng.IPromise<{}>;
-        GetScores(gameid: string) : ng.IPromise<Models.GameScoreModel>;
-        GameReady(gameid: string) : ng.IPromise<{}>;
-        CreateRound(gameid: string) : ng.IPromise<number>;
-        GetPlayerRound(gameid: string, playerid: string) : ng.IPromise<Models.PlayerRoundModel>;
-        GetHostRound(gameid: string): ng.IPromise<Models.HostRoundModel>;
-        SubmitCard(gameid: string, playerid: string, cardids: Array<string>): ng.IPromise<{}>;
-        GetSubmissions(gameid: string): ng.IPromise<Models.SubmissionModel>;
-        PlayersWhoSubmitted(gameid: string): ng.IPromise<Array<string>>;
-        CompleteRound(gameid: string): ng.IPromise<{}>;
-        PickRoundWinner(gameid: string, playerid: string) : ng.IPromise<{}>;
+        CreateGame(): Utilities.IParsedPromise<string>;
+        JoinGame(gameid: string, playerid: string) : Utilities.IParsedPromise<boolean>;
+        EndGame(gameid: string): Utilities.IParsedPromise<{}>;
+        GetScores(gameid: string) : Utilities.IParsedPromise<Models.GameScoreModel>;
+        GameReady(gameid: string) : Utilities.IParsedPromise<{}>;
+        CreateRound(gameid: string) : Utilities.IParsedPromise<number>;
+        GetPlayerRound(gameid: string, playerid: string) : Utilities.IParsedPromise<Models.PlayerRoundModel>;
+        GetHostRound(gameid: string): Utilities.IParsedPromise<Models.HostRoundModel>;
+        SubmitCard(gameid: string, playerid: string, cardids: Array<string>): Utilities.IParsedPromise<{}>;
+        GetSubmissions(gameid: string): Utilities.IParsedPromise<Models.SubmissionModel>;
+        PlayersWhoSubmitted(gameid: string): Utilities.IParsedPromise<Array<string>>;
+        CompleteRound(gameid: string): Utilities.IParsedPromise<{}>;
+        PickRoundWinner(gameid: string, playerid: string) : Utilities.IParsedPromise<{}>;
     }
 
 
     export class ApiService implements IApiService {
         private baseUrl : string;
 
+        static $inject = ['$http', 'settings'];
         constructor(private $http: ng.IHttpService, settings : ISettings) {
             this.baseUrl = settings.BaseApiUrl;
             return this;
         }
 
 
-        CreateGame(): angular.IPromise<string> {
-            return this.$http.get(this.baseUrl + "Match/CreateGame");
+
+        CreateGame(): Utilities.IParsedPromise<string> {
+            var p = this.$http.get<string>(this.baseUrl + "Match/CreateGame");
+            return new Utilities.ParsedPromise<string>(p);
         }
 
 
-        JoinGame(gameid: string, playerid: string): angular.IPromise<boolean> {
-            return this.$http.post(this.baseUrl + 'Match/JoinGame', { GameId: gameid, PlayerId: playerid });
+        JoinGame(gameid: string, playerid: string): Utilities.IParsedPromise<boolean> {
+            var p = this.$http.post<boolean>(this.baseUrl + 'Match/JoinGame', { GameId: gameid, PlayerId: playerid });
+
+            return new Utilities.ParsedPromise<boolean>(p);
         }
 
-        EndGame(gameid: string): angular.IPromise<{}> {
-            return this.$http.get(this.baseUrl + 'Game/EndGame?GameId=' + gameid);
+        EndGame(gameid: string): Utilities.IParsedPromise<{}> {
+            var p = this.$http.get(this.baseUrl + 'Game/EndGame?GameId=' + gameid);
+            return new Utilities.ParsedPromise<{}>(p);
         }
 
-        GetScores(gameid: string): angular.IPromise<App.Models.GameScoreModel> {
-            return this.$http.get(this.baseUrl + 'Game/Scores?GameId=' + gameid);
+        GetScores(gameid: string): Utilities.IParsedPromise<App.Models.GameScoreModel> {
+            var p = this.$http.get(this.baseUrl + 'Game/Scores?GameId=' + gameid);
+            return new Utilities.ParsedPromise<Models.GameScoreModel>(p);
         }
 
-        GameReady(gameid: string): angular.IPromise<{}> {
-            return this.$http.get(this.baseUrl + 'Game/Start?GameId=' + gameid);
+        GameReady(gameid: string): Utilities.IParsedPromise<{}> {
+            var p = this.$http.get(this.baseUrl + 'Game/Start?GameId=' + gameid);
+            return new Utilities.ParsedPromise<{}>(p);
         }
 
-        CreateRound(gameid: string): angular.IPromise<number> {
-            return this.$http.get(this.baseUrl + 'Round/Create?GameId=' + gameid);
+        CreateRound(gameid: string): Utilities.IParsedPromise<number> {
+            var p =  this.$http.get(this.baseUrl + 'Round/Create?GameId=' + gameid);
+            return new Utilities.ParsedPromise<number>(p);
         }
 
-        GetPlayerRound(gameid: string, playerid: string): angular.IPromise<App.Models.PlayerRoundModel> {
-            return this.$http.get(this.baseUrl + 'Round/GetPlayerRound?GameId=' + gameid + '&PlayerId=' + playerid);
+        GetPlayerRound(gameid: string, playerid: string): Utilities.IParsedPromise<App.Models.PlayerRoundModel> {
+            var p =  this.$http.get(this.baseUrl + 'Round/GetPlayerRound?GameId=' + gameid + '&PlayerId=' + playerid);
+            return new Utilities.ParsedPromise<Models.PlayerRoundModel>(p);
         }
 
-        GetHostRound(gameid: string): angular.IPromise<App.Models.HostRoundModel> {
-            return this.$http.get(this.baseUrl + 'Round/GetHostRound?GameId=' + gameid);
+        GetHostRound(gameid: string): Utilities.IParsedPromise<App.Models.HostRoundModel> {
+            var p = this.$http.get(this.baseUrl + 'Round/GetHostRound?GameId=' + gameid);
+            return new Utilities.ParsedPromise<Models.HostRoundModel>(p);
         }
 
-        SubmitCard(gameid: string, playerid: string, cardids: string[]): angular.IPromise<{}> {
-            return this.$http.post(this.baseUrl + 'Round/Submit',
+        SubmitCard(gameid: string, playerid: string, cardids: string[]): Utilities.IParsedPromise<{}> {
+            var p =  this.$http.post(this.baseUrl + 'Round/Submit',
                 { GameId: gameid, PlayerId: playerid, CardIds: cardids });
+            return new Utilities.ParsedPromise<{}>(p);
         }
 
-        GetSubmissions(gameid: string): angular.IPromise<App.Models.SubmissionModel> {
-            return this.$http.get(this.baseUrl + 'Round/Submissions?GameId=' + gameid);
+        GetSubmissions(gameid: string): Utilities.IParsedPromise<App.Models.SubmissionModel> {
+            var p = this.$http.get(this.baseUrl + 'Round/Submissions?GameId=' + gameid);
+            return new Utilities.ParsedPromise<Models.SubmissionModel>(p);
         }
 
-        PlayersWhoSubmitted(gameid: string): angular.IPromise<string[]> {
-            return this.$http.get(this.baseUrl + 'Round/PlayersWhoSubmitted?GameId=' + gameid);
+        PlayersWhoSubmitted(gameid: string): Utilities.IParsedPromise<string[]> {
+            var p = this.$http.get(this.baseUrl + 'Round/PlayersWhoSubmitted?GameId=' + gameid);
+            return new Utilities.ParsedPromise<string[]>(p);
         }
 
-        CompleteRound(gameid: string): angular.IPromise<{}> {
-            return this.$http.get(this.baseUrl + 'Round/End?GameId=' + gameid);
+        CompleteRound(gameid: string): Utilities.IParsedPromise<{}> {
+            var p = this.$http.get(this.baseUrl + 'Round/End?GameId=' + gameid);
+            return new Utilities.ParsedPromise<{}>(p);
         }
 
-        PickRoundWinner(gameid: string, playerid: string): angular.IPromise<{}> {
-            return this.$http.post(this.baseUrl + 'Round/SubmitWinner', { GameId: gameid, PlayerId: playerid });
+        PickRoundWinner(gameid: string, playerid: string): Utilities.IParsedPromise<{}> {
+            var p = this.$http.post(this.baseUrl + 'Round/SubmitWinner', { GameId: gameid, PlayerId: playerid });
+            return new Utilities.ParsedPromise<{}>(p);
         }
     }
-    CAH.Module.factory("apiservice", ApiService);
+    CAH.Module.factory("apiservice", ($http: ng.IHttpService, settings: ISettings) => new ApiService($http ,settings));
 }

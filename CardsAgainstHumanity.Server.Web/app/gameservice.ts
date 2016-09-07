@@ -37,7 +37,7 @@
             this.maxTime = value;
         }
     }
-    CAH.Module.factory("gameproperties", GameProperties);
+    CAH.Module.factory("gameproperties", () => new GameProperties());
 }
 
 //(function () {

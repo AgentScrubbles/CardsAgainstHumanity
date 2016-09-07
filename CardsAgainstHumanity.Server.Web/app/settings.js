@@ -24,5 +24,6 @@ var App;
         return Settings;
     }());
     App.Settings = Settings;
-    App.CAH.Module.factory('settings', Settings);
+    App.CAH.Module.factory('settings', function () { return new Settings(); });
 })(App || (App = {}));
+//# sourceMappingURL=settings.js.map

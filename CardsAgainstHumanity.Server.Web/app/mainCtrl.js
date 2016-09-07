@@ -1,14 +1,15 @@
 /// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="./api.ts"/>
 var App;
 (function (App) {
     var MainCtrl = (function () {
-        function MainCtrl($scope, $location, apiservice, signalrservice, signalrhubs) {
+        function MainCtrl($scope, $location, gameproperties, apiservice, signalrservice, signalrhubs) {
             this.$scope = $scope;
             this.$location = $location;
+            this.gameproperties = gameproperties;
             this.apiservice = apiservice;
             this.signalrservice = signalrservice;
             this.signalrhubs = signalrhubs;
-            debugger;
             $scope.showmain = true;
             $scope.showjoin = false;
             $scope.showwaiting = false;
@@ -16,13 +17,14 @@ var App;
             $scope.playerid = '';
             $scope.StartGame = function () {
                 var me = this;
-                this.apiservice.CreateGame(function (result) {
-                    me.gameProperties.setGameId(result);
-                    me.signalRService.Initialize(function () {
-                        me.$location.path('/lobby');
-                        me.$apply();
+                apiservice.CreateGame()
+                    .then(function (result) {
+                    gameproperties.setGameId(result);
+                    signalrservice.Initialize(function () {
+                        $location.path('/lobby');
+                        $scope.$apply();
                     });
-                });
+                }, function (error) { return console.log(error); });
             };
             $scope.JoinGame = function () {
                 this.showmain = false;
@@ -30,21 +32,20 @@ var App;
             };
             $scope.JoinGameWithPlayer = function () {
                 var me = this;
-                me.gameProperties.setGameId(me.gameid);
-                me.apiService.JoinGame(me.gameid, me.playerid, function (result) {
-                    me.gameProperties.setPlayerId(me.playerid);
-                    me.showmain = false;
-                    me.showjoin = false;
-                    me.showwaiting = true;
-                    if (result) {
-                        me.$location.path('/round');
+                gameproperties.setGameId(me.gameid);
+                apiservice.JoinGame(me.gameid, me.playerid)
+                    .then(function (result) {
+                    gameproperties.setPlayerId(me.playerid);
+                    $scope.showmain = false;
+                    $scope.showjoin = false;
+                    $scope.showwaiting = true;
+                    if (result.data) {
+                        $location.path('/round');
                     }
                     else {
-                        me.$location.path('/loading');
+                        $location.path('/loading');
                     }
-                }, function (error) {
-                    console.log(error);
-                });
+                }, function (error) { return console.log(error); });
             };
             $scope.CancelJoinGame = function () {
                 var me = this;
@@ -52,8 +53,10 @@ var App;
                 me.showjoin = false;
             };
         }
+        MainCtrl.$inject = ["$scope", "$location", "gameproperties", "apiservice", "signalrservice", "signalrhubs"];
         return MainCtrl;
     }());
     App.MainCtrl = MainCtrl;
     App.CAH.Module.controller('MainCtrl', MainCtrl);
 })(App || (App = {}));
+//# sourceMappingURL=mainCtrl.js.map

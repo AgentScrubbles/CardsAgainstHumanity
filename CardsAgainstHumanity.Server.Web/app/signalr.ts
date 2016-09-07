@@ -85,7 +85,7 @@ module App {
             });
         }
     }
-    CAH.Module.factory("signalrservice", SignalRService);
+    CAH.Module.factory("signalrservice", (settings: ISettings, gameproperties: IGameProperties, signalrhubs: ISignalRHubs) => new SignalRService(settings, gameproperties, signalrhubs));
 
     export interface ISignalRHubs {
         PlayerAddedFn: Function;
@@ -135,6 +135,6 @@ module App {
             this._gameEndedFn = value;
         }
     }
-    CAH.Module.factory("signalrhubs", SignalRHubs);
+    CAH.Module.factory("signalrhubs", () => new SignalRHubs());
 }
 

@@ -26,5 +26,5 @@
         Test(): string { return "Test"; }
     }
 
-    CAH.Module.factory('settings', Settings);
+    CAH.Module.factory('settings', () => new Settings());
 }

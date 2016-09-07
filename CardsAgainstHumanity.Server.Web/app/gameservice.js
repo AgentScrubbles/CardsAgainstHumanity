@@ -25,7 +25,7 @@ var App;
         return GameProperties;
     }());
     App.GameProperties = GameProperties;
-    App.CAH.Module.factory("gameproperties", GameProperties);
+    App.CAH.Module.factory("gameproperties", function () { return new GameProperties(); });
 })(App || (App = {}));
 //(function () {
 //    var app = angular.module('cah');
@@ -55,3 +55,4 @@ var App;
 //        };
 //    });
 //})(); 
+//# sourceMappingURL=gameservice.js.map

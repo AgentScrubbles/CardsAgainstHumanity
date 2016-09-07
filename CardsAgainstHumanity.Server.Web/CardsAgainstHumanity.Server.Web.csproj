@@ -183,6 +183,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\api.ts" />
     <TypeScriptCompile Include="app\app.ts" />
+    <TypeScriptCompile Include="app\controllers\LobbyCtrl.ts" />
     <TypeScriptCompile Include="app\gamemodule.ts" />
     <TypeScriptCompile Include="app\gameservice.ts" />
     <TypeScriptCompile Include="app\loadingCtrl.ts" />
@@ -193,6 +194,7 @@
     <TypeScriptCompile Include="app\models\SubmissionModels.ts" />
     <TypeScriptCompile Include="app\settings.ts" />
     <TypeScriptCompile Include="app\signalr.ts" />
+    <TypeScriptCompile Include="app\utilities\ParsedPromise.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-component-router.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />

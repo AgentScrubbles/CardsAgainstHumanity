@@ -1,4 +1,5 @@
 ﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="./api.ts"/>
 
 module App {
     export interface IMainCtrlScope extends ng.IScope {
@@ -17,13 +18,13 @@ module App {
 
     export class MainCtrl {
 
-
+        static $inject = ["$scope", "$location", "gameproperties", "apiservice", "signalrservice", "signalrhubs"];
         constructor(private $scope: IMainCtrlScope,
             private $location: ng.ILocationService,
-            private apiservice: IApiService,
+            private gameproperties : IGameProperties,
+            private apiservice: ApiService,
             private signalrservice: ISignalRService,
             private signalrhubs: ISignalRHubs) {
-            debugger;
             $scope.showmain = true;
             $scope.showjoin = false;
             $scope.showwaiting = false;
@@ -31,13 +32,14 @@ module App {
             $scope.playerid = '';
             $scope.StartGame = function () {
                 var me = this;
-                this.apiservice.CreateGame(function (result) {
-                    me.gameProperties.setGameId(result);
-                    me.signalRService.Initialize(function () {
-                        me.$location.path('/lobby');
-                        me.$apply();
-                    });
-                });
+               apiservice.CreateGame()
+                    .then((result:any) => {
+                        gameproperties.setGameId(result);
+                        signalrservice.Initialize(() => {
+                            $location.path('/lobby');
+                            $scope.$apply();
+                        });
+                    }, (error) => console.log(error));
             }
             $scope.JoinGame = function () {
                 this.showmain = false;
@@ -45,22 +47,20 @@ module App {
             }
             $scope.JoinGameWithPlayer = function () {
                 var me = this;
-                me.gameProperties.setGameId(me.gameid);
-                me.apiService.JoinGame(me.gameid, me.playerid, function (result) {
-                    me.gameProperties.setPlayerId(me.playerid);
-                    me.showmain = false;
-                    me.showjoin = false;
-                    me.showwaiting = true;
-                    if (result) {
-                        me.$location.path('/round');
-                    } else {
-                        me.$location.path('/loading');
+                gameproperties.setGameId(me.gameid);
 
-
-                    }
-                }, error => {
-                    console.log(error);
-                });
+                apiservice.JoinGame(me.gameid, me.playerid)
+                    .then((result: any) => {
+                        gameproperties.setPlayerId(me.playerid);
+                        $scope.showmain = false;
+                        $scope.showjoin = false;
+                        $scope.showwaiting = true;
+                        if (result.data) {
+                            $location.path('/round');
+                        } else {
+                            $location.path('/loading');
+                        }
+                    }, (error) => console.log(error));
             }
             $scope.CancelJoinGame = function () {
                 var me = this;
