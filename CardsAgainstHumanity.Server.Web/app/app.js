@@ -23,4 +23,3 @@ var App;
             .otherwise({ redirectTo: '/error' });
     });
 })(App || (App = {}));
-//# sourceMappingURL=app.js.map

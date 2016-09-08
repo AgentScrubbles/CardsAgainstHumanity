@@ -86,4 +86,3 @@ var App;
         Models.BlackCardModel = BlackCardModel;
     })(Models = App.Models || (App.Models = {}));
 })(App || (App = {}));
-//# sourceMappingURL=CardModel.js.map

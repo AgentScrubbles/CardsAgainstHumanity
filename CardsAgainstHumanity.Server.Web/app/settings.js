@@ -26,4 +26,3 @@ var App;
     App.Settings = Settings;
     App.CAH.Module.factory('settings', function () { return new Settings(); });
 })(App || (App = {}));
-//# sourceMappingURL=settings.js.map

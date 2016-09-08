@@ -20,4 +20,3 @@ var App;
     App.CAH = new AppContainer();
     App.CAH.Module = angular.module('cah', ['ngRoute', 'ui.bootstrap']);
 })(App || (App = {}));
-//# sourceMappingURL=gamemodule.js.map

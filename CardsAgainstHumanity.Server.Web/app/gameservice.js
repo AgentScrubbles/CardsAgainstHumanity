@@ -55,4 +55,3 @@ var App;
 //        };
 //    });
 //})(); 
-//# sourceMappingURL=gameservice.js.map

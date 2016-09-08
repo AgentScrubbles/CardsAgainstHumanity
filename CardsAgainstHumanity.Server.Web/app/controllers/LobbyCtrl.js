@@ -39,4 +39,3 @@ var App;
         });
     })(Controllers = App.Controllers || (App.Controllers = {}));
 })(App || (App = {}));
-//# sourceMappingURL=LobbyCtrl.js.map

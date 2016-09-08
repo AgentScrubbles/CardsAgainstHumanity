@@ -134,4 +134,3 @@ var App;
     App.SignalRHubs = SignalRHubs;
     App.CAH.Module.factory("signalrhubs", function () { return new SignalRHubs(); });
 })(App || (App = {}));
-//# sourceMappingURL=signalr.js.map

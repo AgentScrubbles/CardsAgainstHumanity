@@ -77,4 +77,3 @@ var App;
         Models.HostRoundModel = HostRoundModel;
     })(Models = App.Models || (App.Models = {}));
 })(App || (App = {}));
-//# sourceMappingURL=RoundModels.js.map

@@ -59,4 +59,3 @@ var App;
     App.MainCtrl = MainCtrl;
     App.CAH.Module.controller('MainCtrl', MainCtrl);
 })(App || (App = {}));
-//# sourceMappingURL=mainCtrl.js.map

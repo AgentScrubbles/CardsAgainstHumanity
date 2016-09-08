@@ -65,4 +65,3 @@ var App;
     App.ApiService = ApiService;
     App.CAH.Module.factory("apiservice", function ($http, settings) { return new ApiService($http, settings); });
 })(App || (App = {}));
-//# sourceMappingURL=api.js.map
